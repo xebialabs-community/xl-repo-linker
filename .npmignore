@@ -1,0 +1,5 @@
+.idea
+chrome-extension
+node_modules
+.xl-repo-linker-config.yml
+results.txt

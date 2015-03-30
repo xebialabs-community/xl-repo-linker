@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+
+var server = require('./server.js');
+var config = require('../lib/common/config.js');
+
+config.createDefaultConfigFile();
+config.encodePlainTextPasswords();
+server.start();

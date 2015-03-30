@@ -1,0 +1,34 @@
+body {
+    width: 500px;
+}
+
+.form-horizontal .control-label {
+    padding-top: 7px;
+    margin-bottom: 0;
+}
+
+legend.main-title {
+    text-align: center
+}
+
+.form-horizontal .form-group {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.form-label {
+    margin: 10px 0 0 25px;
+    text-align: center;
+}
+
+.radio-label {
+    margin-left: 10px;
+}
+
+.settings {
+    float: right;
+    display: block;
+    border: none;
+    margin-top: 5px;
+    margin-right: 10px;
+}
