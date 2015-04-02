@@ -3,6 +3,7 @@ var services = require('./../lib/services/index');
 var XlreConfig = require('./../lib/common/config.js');
 
 var getport = require('getport');
+var fs = require('fs');
 var path = require('path');
 var Decompress = require('decompress');
 
@@ -39,9 +40,12 @@ app.get('/pick', function (req, res) {
 
 app.get('/jiraHost', function (req, res) {
     var jiraHost = XlreConfig.readXlreConfig().jira.host;
+    var xldHome = XlreConfig.getXldLocation();
     if (XlreConfig.isValidConfigFile()) {
         isInvalidConfiguration = true;
         res.send(500, 'Please provide all values in .xl-repo-linker-config.yml in your home directory');
+    } else if (!fs.existsSync(xldHome)) {
+        res.send(500, 'XL Deploy home doesn\'t exists [' + xldHome + ']');
     } else {
         if (isInvalidConfiguration) {
             XlreConfig.encodePlainTextPasswords();
