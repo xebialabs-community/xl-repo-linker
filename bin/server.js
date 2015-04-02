@@ -2,6 +2,7 @@ var app = require('express')();
 var services = require('./../lib/services/index');
 var XlreConfig = require('./../lib/common/config.js');
 
+var getport = require('getport');
 var path = require('path');
 var Decompress = require('decompress');
 
@@ -51,12 +52,20 @@ app.get('/jiraHost', function (req, res) {
 
 Server.prototype.start = function () {
 
-    var server = app.listen(server_port, function () {
-        var host = server.address().address;
-        var port = server.address().port;
+    getport(server_port, function (e, p) {
+        if (e || p !== server_port) {
+            console.log("XL Repo Linker cannot start because port " + server_port + " is already occupied");
+            return;
+        }
 
-        console.log('XL Repo Linker is started at http://%s:%s', host, port)
+        var server = app.listen(server_port, function () {
+            var host = server.address().address;
+            var port = server.address().port;
+
+            console.log('XL Repo Linker is started at http://%s:%s', host, port)
+        });
     });
+
 };
 
 module.exports = new Server();
