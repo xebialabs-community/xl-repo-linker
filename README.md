@@ -27,6 +27,14 @@ Once you have `npm`:
 
 This will install `xl-repo-linker` globally so that it may be run from the command line.
 
+To update to the latest version after a while:
+
+    npm update -g xl-repo-linker
+    
+To check current version of xl-repo-linker:
+
+    npm list -g | grep xl-repo-linker
+
 ## How to run the server:
 
      xl-repo-linker
