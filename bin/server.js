@@ -6,6 +6,7 @@ var getport = require('getport');
 var fs = require('fs');
 var path = require('path');
 var Decompress = require('decompress');
+var Q = require('q');
 
 var isInvalidConfiguration = false;
 
@@ -39,20 +40,50 @@ app.get('/pick', function (req, res) {
 });
 
 app.get('/jiraHost', function (req, res) {
+    var deferred = Q.defer();
+
     var jiraHost = XlreConfig.readXlreConfig().jira.host;
     var xldHome = XlreConfig.getXldLocation();
     if (XlreConfig.isValidConfigFile()) {
         isInvalidConfiguration = true;
         res.send(500, 'Please provide all values in .xl-repo-linker-config.yml in your home directory');
     } else if (!fs.existsSync(xldHome)) {
-        res.send(500, 'XL Deploy home doesn\'t exists [' + xldHome + ']');
+        res.send(500, 'XL Deploy home doesn\'t exist [' + xldHome + ']');
     } else {
+        jiraCredentials().then(function (msg) {
+            if (isInvalidConfiguration) {
+                XlreConfig.encodePlainTextPasswords();
+            }
+            deferred.resolve(msg);
+        }, function (err) {
+            deferred.reject(err);
+        });
+
         if (isInvalidConfiguration) {
             XlreConfig.encodePlainTextPasswords();
         }
-        res.send(jiraHost);
     }
+
+    deferred.promise.then(function () {
+        res.send(jiraHost);
+    }, function (err) {
+        res.send(500, err);
+    });
 });
+
+var jiraCredentials = function () {
+    var deferred = Q.defer();
+    services.pick.execute('ping', true, true).then(function (message) {
+        deferred.resolve(JSON.parse(message).sections[0].issues);
+    }, function (err) {
+        if (err.response.statusCode == 401) {
+            deferred.reject('Please check your Jira credentials');
+        } else {
+            deferred.reject(err);
+        }
+    });
+    return deferred.promise;
+};
 
 Server.prototype.start = function () {
 
