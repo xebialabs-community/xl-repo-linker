@@ -9,7 +9,7 @@ var Http = rewire('../../lib/common/http.js');
 describe("Common http", function () {
 
     it("should create url with basic params", function() {
-        var Config = TestSetup.setupConfigFile();
+        var Config = TestSetup.setupAlreadyEncryptedConfigFile();
         Config.encodePlainTextPasswords();
 
         Http.__set__({

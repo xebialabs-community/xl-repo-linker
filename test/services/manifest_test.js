@@ -35,10 +35,10 @@ describe('Services manifest', function () {
             fs: fs
         });
 
-        Manifest.createManifestForPlugins();
+        Manifest.createManifestForPlugins('/temp');
 
         expect(pluginsData).to.equal('1.jar\n2.jar\n3.xldp\n');
-        expect(pluginsFilePath).to.equal('/home/user/xld/.plugins');
+        expect(pluginsFilePath).to.equal('/temp/.plugins');
     });
 
 });

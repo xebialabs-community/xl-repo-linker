@@ -3,8 +3,10 @@ jira:
   api_path:      /rest/api/2
   login:         # Please add here your Jira user login
   password:      # Please add here your Jira user password
+  encrypted:     false
 xld:
   host: http://localhost:4516
   home:          # Please add here your XLD home path
   login:         # Please add here your XLD admin user login
   password:      # Please add here your XLD admin user password
+  encrypted:     false

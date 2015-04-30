@@ -30,11 +30,27 @@ describe("Common config", function () {
     it("should encode plain text password in configuration file", function () {
         var Config = TestSetup.setupConfigFile();
         Config.encodePlainTextPasswords();
-
         var config = Config.readXlreConfig();
+        expect(config.jira.password).to.equal('12345a');
+        expect(config.xld.password).to.equal('23456a');
+    });
 
+    it("should encode plain text password in configuration file with not encrypted values", function () {
+        var Config = TestSetup.setupNotEncryptedConfigFile();
+
+        Config.encodePlainTextPasswords();
+        var config = Config.readXlreConfig();
         expect(config.jira.password).to.equal('MTIzNDVh');
         expect(config.xld.password).to.equal('MjM0NTZh');
+    });
+
+    it("should encode plain text password in configuration file", function () {
+        var Config = TestSetup.setupAlreadyEncryptedConfigFile();
+
+        Config.encodePlainTextPasswords();
+        config2 = Config.readXlreConfig();
+        expect(config2.jira.password).to.equal('MTIzNDVh');
+        expect(config2.xld.password).to.equal('MjM0NTZh');
     });
 
     it("should read config file", function () {

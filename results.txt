@@ -5,6 +5,8 @@
     ✓ should return xld home location 
     ✓ should update config key 
     ✓ should encode plain text password in configuration file 
+    ✓ should encode plain text password in configuration file with not encrypted values 
+    ✓ should encode plain text password in configuration file 
     ✓ should read config file 
     ✓ should return xl-repo-linker home 
 
@@ -29,5 +31,5 @@
     ✓ should create .plugin with the list of .xldp and .jar files 
 
 
-  14 passing (17ms)
+  16 passing (28ms)
 

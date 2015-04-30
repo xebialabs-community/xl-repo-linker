@@ -8,7 +8,7 @@ var Jira = rewire('../../lib/jira/index.js');
 describe('Jira index', function () {
 
     it('should get issue by issue name', function () {
-        var Config = TestSetup.setupConfigFile();
+        var Config = TestSetup.setupNotEncryptedConfigFile();
         Config.encodePlainTextPasswords();
 
         var actualRequest = '';
