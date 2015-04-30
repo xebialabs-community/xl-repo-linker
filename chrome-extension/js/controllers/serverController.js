@@ -67,11 +67,11 @@ xlRepoLinker.controller('ServerController', function ServerController($scope, Ht
     };
 
     $scope.isImportDisabled = function () {
-        return !$scope.jiraIssue;
+        return Boolean(!$scope.jiraIssue || $scope.status);
     };
 
     $scope.isExportDisabled = function () {
-        return !$scope.jiraIssue;
+        return Boolean(!$scope.jiraIssue || $scope.status);
     };
 
 });

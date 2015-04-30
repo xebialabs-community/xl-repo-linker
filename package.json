@@ -33,6 +33,8 @@
   "dependencies": {
     "archiver": "0.14.3",
     "async": "0.9.0",
+    "bower": "1.4.1",
+    "bower-installer": "1.2.0",
     "cli": "0.6.5",
     "decompress": "2.2.1",
     "express": ">= 1.2.0",
