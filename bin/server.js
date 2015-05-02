@@ -1,6 +1,8 @@
-var app = require('express')();
-var services = require('./../lib/services/index');
-var XlreConfig = require('./../lib/common/config.js');
+var app = require('../lib/app');
+
+var services = require('./../lib/services');
+var XlreConfig = require('./../lib/common/config');
+require('./../lib/google-drive');
 
 var getport = require('getport');
 var fs = require('fs');
