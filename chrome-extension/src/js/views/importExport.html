@@ -1,72 +1,74 @@
-<div class="form-group">
-    <label class="col-xs-3 control-label">Type</label>
+<div>
+    <div class="form-group">
+        <label class="col-xs-3 control-label">Type</label>
 
-    <div class="col-xs-9">
-        <select ng-model="selectedLinkType" ng-controller="ServerController" ng-change="changeType()"
-                ng-options="x.id as x.name for x in linkTypes" class="selectedType"></select>
-    </div>
-</div>
-
-<div ui-view></div>
-
-<div class="form-group">
-    <div class="col-xs-3">
-    </div>
-    <div class="col-xs-9">
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" ng-model="restartServerAfterImport">
-                Restart server after import
-            </label>
-        </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" ng-model="overwriteAlreadyExported">
-                Overwrite already exported
-            </label>
+        <div class="col-xs-9">
+            <select ng-model="selectedLinkType" ng-controller="ServerController" ng-change="changeType()"
+                    ng-options="x.id as x.name for x in linkTypes" class="selectedType"></select>
         </div>
     </div>
-</div>
 
-<div class="form-group" ng-if="errorResult">
-    <div class="col-xs-3">
-    </div>
-    <div class="col-xs-9">
-        <div class="alert alert-danger" role="alert">
-            {{errorResult}}
+    <div ui-view></div>
+
+    <div class="form-group">
+        <div class="col-xs-3">
+        </div>
+        <div class="col-xs-9">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="restartServerAfterImport">
+                    Restart server after import
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="overwriteAlreadyExported">
+                    Overwrite already exported
+                </label>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="form-group" ng-if="successResult">
-    <div class="col-xs-3">
-    </div>
-    <div class="col-xs-9">
-        <div class="alert alert-success" role="alert">
-            {{successResult}}
+    <div class="form-group" ng-if="errorResult">
+        <div class="col-xs-3">
+        </div>
+        <div class="col-xs-9">
+            <div class="alert alert-danger" role="alert">
+                {{errorResult}}
+            </div>
         </div>
     </div>
-</div>
 
-<div class="form-group" ng-if="status">
-    <div class="col-xs-3">
-    </div>
-    <div class="col-xs-9">
-        <div class="alert alert-warning" role="alert">
-            {{status}}
+    <div class="form-group" ng-if="successResult">
+        <div class="col-xs-3">
+        </div>
+        <div class="col-xs-9">
+            <div class="alert alert-success" role="alert">
+                {{successResult}}
+            </div>
         </div>
     </div>
-</div>
 
-<div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-        <div class="pull-right">
-            <button class="btn btn-primary" ng-click="importSnapshot()"
-                    ng-disabled="isImportDisabled()">Import
-            </button>
-            <button class="btn btn-warning" ng-click="exportSnapshot()"
-                    ng-disabled="isExportDisabled()">Export
-            </button>
+    <div class="form-group" ng-if="status">
+        <div class="col-xs-3">
+        </div>
+        <div class="col-xs-9">
+            <div class="alert alert-warning" role="alert">
+                {{status}}
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="pull-right">
+                <button class="btn btn-primary" ng-click="importSnapshot()"
+                        ng-disabled="isImportDisabled()">Import
+                </button>
+                <button class="btn btn-warning" ng-click="exportSnapshot()"
+                        ng-disabled="isExportDisabled()">Export
+                </button>
+            </div>
         </div>
     </div>
 </div>

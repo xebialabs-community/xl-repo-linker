@@ -16,7 +16,8 @@ xlRepoLinker.config(['$stateProvider', '$urlRouterProvider', function ($statePro
     $stateProvider
         .state('importExport', {
             url: "/importExport",
-            templateUrl: "src/js/views/importExport.html"
+            templateUrl: "src/js/views/importExport.html",
+            controller: "ImportExportController"
         });
 
     $urlRouterProvider.otherwise('/importExport/jiraRoute');

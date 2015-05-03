@@ -1,13 +1,10 @@
 'use strict';
 
 xlRepoLinker.config(['$stateProvider', function ($stateProvider) {
-        $stateProvider.state('googleDriveRoute', {
-            url: '/googleDriveRoute',
-            parent: 'importExport',
-            templateUrl: 'src/js/views/googleDrive/googleDriveView.html',
-            controller: 'GoogleDriveController'
-        });
-    }])
-    .controller('GoogleDriveController', function GoogleDriveController($scope, HttpService, xlRepoLinkerHost) {
-
+    $stateProvider.state('googleDriveRoute', {
+        url: '/googleDriveRoute',
+        parent: 'importExport',
+        templateUrl: 'src/js/views/googleDrive/googleDriveView.html',
+        controller: 'ImportExportController'
     });
+}]);

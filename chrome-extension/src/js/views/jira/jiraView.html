@@ -1,22 +1,18 @@
-<div ng-controller="JiraController">
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Issue</label>
+<div class="form-group">
+    <label class="col-xs-3 control-label">Issue</label>
 
-        <div class="col-xs-9">
+    <div class="col-xs-9">
 
-            <angucomplete placeholder="Jira issue"
-                          pause="100"
-                          selectedobject="jiraIssue"
-                          url="{{pickUrl}}"
-                          searchfields="key"
-                          titlefield="key"
-                          descriptionfield="summary"
-                          minlength="1"
-                          imagetitlefield="img"
-                          imagetitlehost="{{jiraHostUrl}}"
-                          inputclass="form-control form-control-small"/>
-        </div>
+        <angucomplete placeholder="Jira issue"
+                      pause="100"
+                      selectedobject="jiraIssue"
+                      url="{{pickUrl}}"
+                      searchfields="key"
+                      titlefield="key"
+                      descriptionfield="summary"
+                      minlength="1"
+                      imagetitlefield="img"
+                      imagetitlehost="{{jiraHostUrl}}"
+                      inputclass="form-control form-control-small"/>
     </div>
-
-
 </div>
