@@ -10,3 +10,7 @@ xld:
   login:         # Please add here your XLD admin user login
   password:      # Please add here your XLD admin user password
   encrypted:     false
+googleDrive:
+  enabled:       false
+  clientId:      # Please add here your Google Drive Client Id
+  clientSecret:  # Please add here your Google Drive Client Secret

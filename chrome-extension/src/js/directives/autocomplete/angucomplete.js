@@ -28,7 +28,7 @@ angular.module('angucomplete', [] )
                 "minLengthUser": "@minlength",
                 "matchClass": "@matchclass"
             },
-            templateUrl: 'js/directives/autocomplete/autocomplete.template.html',
+            templateUrl: 'src/js/directives/autocomplete/autocomplete.template.html',
 
             link: function($scope, elem, attrs) {
                 $scope.lastSearchTerm = null;

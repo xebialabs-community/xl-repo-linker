@@ -4,35 +4,39 @@
     <meta charset="utf-8">
     <title>XL Repo Linker</title>
 
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="assets/base.css">
-    <link rel="stylesheet" href="assets/angucomplete.css">
+    <link rel="stylesheet" href="src/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="src/assets/base.css">
+    <link rel="stylesheet" href="src/assets/angucomplete.css">
+    <link rel="stylesheet" href="src/assets/form.css">
 
     <!-- Libraries -->
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="src/bower_components/angular/angular.js"></script>
+    <script src="src/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 
-    <!-- Third party components -->
-
-    <script src="js/app.js"></script>
+    <!-- Applications -->
+    <script src="src/js/app.js"></script>
 
     <!-- Controllers -->
-    <script src="js/controllers/serverController.js"></script>
+    <script src="src/js/controllers/serverController.js"></script>
 
     <!-- Filters -->
-    <script src="js/filters/truncate.js"></script>
+    <script src="src/js/filters/truncate.js"></script>
 
     <!-- Services -->
-    <script src="js/services/serverService.js"></script>
+    <script src="src/js/services/serverService.js"></script>
 
     <!-- Directives -->
-    <script src="js/directives/autocomplete/angucomplete.js"></script>
+    <script src="src/js/directives/autocomplete/angucomplete.js"></script>
+
+    <!-- Views -->
+    <script src="src/js/views/jira/jiraView.js"></script>
+    <script src="src/js/views/googleDrive/googleDriveView.js"></script>
 
 </head>
 
 <body>
-<div class="row" ng-app="xl-repo-linker" ng-csp>
-    <div class="col-md-12" ng-controller="ServerController">
+<div class="row" ng-app="xl-repo-linker" ng-csp ng-cloak>
+    <div class="col-md-12">
         <form name="serverForm" class="form-horizontal" role="form">
             <fieldset>
 
@@ -40,87 +44,16 @@
                     <!--<img class="settings" src="assets/cogwheel.png" />-->
                 </legend>
 
-                <div class="form-group">
-                    <label class="col-xs-3 control-label" for="textinput">Issue</label>
+                <div class="form-group" >
+                    <label class="col-xs-3 control-label">Type</label>
 
                     <div class="col-xs-9">
-
-                        <angucomplete placeholder="Jira issue"
-                                      pause="100"
-                                      selectedobject="jiraIssue"
-                                      url="{{pickUrl}}"
-                                      searchfields="key"
-                                      titlefield="key"
-                                      descriptionfield="summary"
-                                      minlength="1"
-                                      imagetitlefield="img"
-                                      imagetitlehost="{{jiraHostUrl}}"
-                                      inputclass="form-control form-control-small"
-                                />
+                        <select ng-model="selectedLinkType" ng-controller="ServerController" ng-change="changeType()"
+                                ng-options="x.id as x.name for x in linkTypes" class="selectedType"></select>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="col-xs-3">
-                    </div>
-                    <div class="col-xs-9">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" ng-model="restartServerAfterImport">
-                                Restart server after import
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" ng-model="overwriteAlreadyExported">
-                                Overwrite already exported
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group" ng-if="errorResult">
-                    <div class="col-xs-3">
-                    </div>
-                    <div class="col-xs-9">
-                        <div class="alert alert-danger" role="alert">
-                            {{errorResult}}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group" ng-if="successResult">
-                    <div class="col-xs-3">
-                    </div>
-                    <div class="col-xs-9">
-                        <div class="alert alert-success" role="alert">
-                            {{successResult}}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group" ng-if="status">
-                    <div class="col-xs-3">
-                    </div>
-                    <div class="col-xs-9">
-                        <div class="alert alert-warning" role="alert">
-                            {{status}}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <div class="pull-right">
-                            <button class="btn btn-primary" ng-click="importSnapshot()"
-                                    ng-disabled="isImportDisabled()">Import
-                            </button>
-                            <button class="btn btn-warning" ng-click="exportSnapshot()"
-                                    ng-disabled="isExportDisabled()">Export
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <div ui-view></div>
 
             </fieldset>
         </form>
