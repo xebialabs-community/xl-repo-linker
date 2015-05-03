@@ -29,8 +29,8 @@
     <script src="src/js/directives/autocomplete/angucomplete.js"></script>
 
     <!-- Views -->
-    <script src="src/js/views/jira/jiraView.js"></script>
-    <script src="src/js/views/googleDrive/googleDriveView.js"></script>
+    <script src="src/js/views/jira/jiraRoute.js"></script>
+    <script src="src/js/views/googleDrive/googleDriveRoute.js"></script>
 
 </head>
 
@@ -43,15 +43,6 @@
                 <legend class="main-title">XL Repo Linker
                     <!--<img class="settings" src="assets/cogwheel.png" />-->
                 </legend>
-
-                <div class="form-group" >
-                    <label class="col-xs-3 control-label">Type</label>
-
-                    <div class="col-xs-9">
-                        <select ng-model="selectedLinkType" ng-controller="ServerController" ng-change="changeType()"
-                                ng-options="x.id as x.name for x in linkTypes" class="selectedType"></select>
-                    </div>
-                </div>
 
                 <div ui-view></div>
 

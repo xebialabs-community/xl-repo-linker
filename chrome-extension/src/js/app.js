@@ -12,5 +12,12 @@ xlRepoLinker.config(
     .constant('xlRepoLinkerHost', 'http://localhost:3000/');
 
 xlRepoLinker.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/jiraRoute');
+
+    $stateProvider
+        .state('importExport', {
+            url: "/importExport",
+            templateUrl: "src/js/views/importExport.html"
+        });
+
+    $urlRouterProvider.otherwise('/importExport/jiraRoute');
 }]);
