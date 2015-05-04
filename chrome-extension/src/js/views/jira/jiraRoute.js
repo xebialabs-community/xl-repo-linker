@@ -24,7 +24,7 @@ xlRepoLinker.controller('JiraController',
             $scope.clear();
             $scope.status = 'Import is in progress...';
 
-            HttpService.get('import/' + $scope.jiraIssue.title,
+            HttpService.get('jira/import/' + $scope.jiraIssue.title,
                 {
                     restartServerAfterImport: $scope.restartServerAfterImport
                 }
@@ -43,7 +43,7 @@ xlRepoLinker.controller('JiraController',
             $scope.clear();
             $scope.status = 'Export is in progress...';
 
-            HttpService.get('export/' + $scope.jiraIssue.title,
+            HttpService.get('jira/export/' + $scope.jiraIssue.title,
                 {
                     overwriteAlreadyExported: $scope.overwriteAlreadyExported
                 }
@@ -58,7 +58,7 @@ xlRepoLinker.controller('JiraController',
                 });
         };
 
-        $scope.pickUrl = xlRepoLinkerHost + 'pick?query=';
+        $scope.pickUrl = xlRepoLinkerHost + 'jira/pick?query=';
 
         $scope.checkAndNotifyAboutServerConnection = function (status) {
             if (status == 0) {

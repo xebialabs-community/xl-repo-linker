@@ -25,15 +25,15 @@ function sendResultToTheUser(res, promiseResult) {
     });
 }
 
-app.get('/import/:issue', function (req, res) {
+app.get('/jira/import/:issue', function (req, res) {
     sendResultToTheUser(res, jira.import.execute(req.params.issue, req.query.restartServerAfterImport));
 });
 
-app.get('/export/:issue', function (req, res) {
+app.get('/jira/export/:issue', function (req, res) {
     sendResultToTheUser(res, jira.export.execute(req.params.issue, req.query.overwriteAlreadyExported));
 });
 
-app.get('/pick', function (req, res) {
+app.get('/jira/pick', function (req, res) {
     jira.pick.execute(req.query.query, req.query.showSubTasks, req.query.showSubTaskParent).then(function (message) {
         res.send(JSON.parse(message).sections[0].issues);
     }, function (err) {
@@ -41,7 +41,7 @@ app.get('/pick', function (req, res) {
     });
 });
 
-app.get('/jiraHost', function (req, res) {
+app.get('/jira/host', function (req, res) {
     var deferred = Q.defer();
 
     var jiraHost = XlreConfig.readXlreConfig().jira.host;

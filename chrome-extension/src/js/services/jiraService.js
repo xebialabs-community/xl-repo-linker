@@ -4,7 +4,7 @@ xlRepoLinker.factory('JiraService', function ($q, HttpService) {
         init: function() {
             var deferred = $q.defer();
 
-            HttpService.get('jiraHost').success(function (data) {
+            HttpService.get('jira/host').success(function (data) {
                 deferred.resolve(data);
             }).error(function (errorMessage, status) {
                 if (status == 0) {
