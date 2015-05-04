@@ -143,7 +143,7 @@ angular.module('angucomplete', [] )
                                     $scope.processResults((($scope.dataField) ? responseData[$scope.dataField] : responseData ), str);
                                 }).
                                 error(function(data, status, headers, config) {
-                                    console.log("error");
+                                    console.log("error", data);
                                 });
                         }
                     }

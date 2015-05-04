@@ -12,5 +12,5 @@ xld:
   encrypted:     false
 googleDrive:
   enabled:       false
-  clientId:      # Please add here your Google Drive Client Id
+  clientId:      219982597230-jt1mmsc4ajjmv583i4qkfqj6cql1hn5i.apps.googleusercontent.com # Please add here your Google Drive Client Id
   clientSecret:  # Please add here your Google Drive Client Secret

@@ -1,6 +1,6 @@
 var app = require('../lib/app');
 
-var services = require('./../lib/services');
+var jira = require('./../lib/jira');
 var XlreConfig = require('./../lib/common/config');
 require('./../lib/google-drive');
 
@@ -26,15 +26,15 @@ function sendResultToTheUser(res, promiseResult) {
 }
 
 app.get('/import/:issue', function (req, res) {
-    sendResultToTheUser(res, services.import.execute(req.params.issue, req.query.restartServerAfterImport));
+    sendResultToTheUser(res, jira.import.execute(req.params.issue, req.query.restartServerAfterImport));
 });
 
 app.get('/export/:issue', function (req, res) {
-    sendResultToTheUser(res, services.export.execute(req.params.issue, req.query.overwriteAlreadyExported));
+    sendResultToTheUser(res, jira.export.execute(req.params.issue, req.query.overwriteAlreadyExported));
 });
 
 app.get('/pick', function (req, res) {
-    services.pick.execute(req.query.query, req.query.showSubTasks, req.query.showSubTaskParent).then(function (message) {
+    jira.pick.execute(req.query.query, req.query.showSubTasks, req.query.showSubTaskParent).then(function (message) {
         res.send(JSON.parse(message).sections[0].issues);
     }, function (err) {
         res.send(err);
@@ -75,7 +75,7 @@ app.get('/jiraHost', function (req, res) {
 
 var jiraCredentials = function () {
     var deferred = Q.defer();
-    services.pick.execute('ping', true, true).then(function (message) {
+    jira.pick.execute('ping', true, true).then(function (message) {
         deferred.resolve(JSON.parse(message).sections[0].issues);
     }, function (err) {
         if (err.response.statusCode == 401) {
