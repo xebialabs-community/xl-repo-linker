@@ -1,6 +1,6 @@
 'use strict';
 
-var xlRepoLinker = angular.module('xl-repo-linker', ['angucomplete', 'truncate', 'ui.router']);
+var xlRepoLinker = angular.module('xl-repo-linker', ['angucomplete', 'truncate', 'ui.router', 'ngSanitize']);
 
 xlRepoLinker.config(
     function ($httpProvider, $locationProvider) {

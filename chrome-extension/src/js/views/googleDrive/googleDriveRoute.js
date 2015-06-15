@@ -10,7 +10,13 @@ xlRepoLinker.config(['$stateProvider', function ($stateProvider) {
 }]);
 
 xlRepoLinker.controller('GoogleDriveController',
-    function GoogleDriveController($rootScope, $scope, JiraService, HttpService, xlRepoLinkerHost) {
+    function GoogleDriveController($scope, $location, HttpService, xlRepoLinkerHost, $sce) {
+
+        $scope.trustSrc = function(src) {
+            return $sce.trustAsResourceUrl(src);
+        };
+
+        //XlreConfig.readXlreConfig().googleDrive
 
         $scope.importSnapshot = function () {
             $scope.clear();
@@ -35,14 +41,23 @@ xlRepoLinker.controller('GoogleDriveController',
             $scope.clear();
             $scope.status = 'Export is in progress...';
 
-            HttpService.get('/google-drive/uploadfile?fileToUploadTitle=' + $scope.packageName + '&fileToUploadPath=' + '',
+            HttpService.get('google-drive/uploadfile?fileToUploadTitle=' + $scope.packageName + '&fileToUploadPath=' + '',
                 {
                     overwriteAlreadyExported: $scope.overwriteAlreadyExported
                 }
             ).success(function (data) {
                     $scope.packageName = '';
                     $scope.status = '';
-                    $scope.successResult = data;
+
+                    chrome.identity.getAuthToken({ 'interactive': true }, function(token) {
+                        if (chrome.runtime.lastError) {
+                            $scope.errorResult = chrome.runtime.lastError;
+                        } else {
+                            alert('my token is: ' + token);
+                        }
+                    });
+
+
                 }).error(function (data, status) {
                     $scope.errorResult = data;
                     $scope.status = '';
