@@ -1,7 +1,7 @@
 {
   "name": "XL Repo Linker",
   "description": "XL Repo Linker in Chrome",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "manifest_version": 2,
   "browser_action": {
     "default_icon": "src/assets/xl-repo-linker.png",

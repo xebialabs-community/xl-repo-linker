@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 var app = require('../lib/app');
 
-var server = require('./server.js');
+var run = require('./run.js');
 var config = require('../lib/common/config.js');
 
 config.createDefaultConfigFile();
 config.encodePlainTextPasswords();
-server.start();
+
+run.begin();
