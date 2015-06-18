@@ -1,6 +1,6 @@
 {
   "name": "xl-repo-linker",
-  "version": "0.0.13",
+  "version": "0.1.0",
   "main": "main.js",
   "devDependencies": {
     "chai": "2.1.2",
