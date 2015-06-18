@@ -29,7 +29,7 @@ This will install `xl-repo-linker` globally so that it may be run from the comma
 
 To update to the latest version after a while:
 
-    npm update -g xl-repo-linker
+    npm update xl-repo-linker -g 
     
 To check current version of xl-repo-linker:
 
@@ -38,6 +38,20 @@ To check current version of xl-repo-linker:
 ## How to run the server:
 
      xl-repo-linker
+     
+## How to use it cli mode:
+
+You can see all options by running
+
+    xl-repo-linker -h
+    
+### How to export xld-snapshot to Jira?
+
+    xl-repo-linker -e DEPL-1000
+    
+### How to import xld-snapshot from Jira issue?
+
+    xl-repo-linker -i DEPL-1000
 
 ## Chrome Extension
  
