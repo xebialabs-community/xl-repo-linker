@@ -16,8 +16,6 @@ RunApp.prototype.begin = function () {
     }
 
     program
-        .version('0.0.1')
-        .option('-h, --help', 'Help output')
         .option('-s, --server', 'Run server for Chrome Extension')
         .option('-i, --import <n>', 'Imports the data as xld snapshot for specified JIRA issue')
         .option('-ir, --import-and-restart <n>', 'Imports and restarts the xld server after import')
@@ -29,7 +27,9 @@ RunApp.prototype.begin = function () {
         program.server = true;
     }
 
-    if (program.server) {
+    if (program.hasOwnProperty('help')) {
+        program.outputHelp();
+    } else if (program.server) {
         server.start();
     } else if (program.import) {
         sendResultToTheUser(cli.import(program.import));
