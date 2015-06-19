@@ -12,7 +12,7 @@ xlRepoLinker.config(['$stateProvider', function ($stateProvider) {
 xlRepoLinker.controller('GoogleDriveController',
     function GoogleDriveController($scope, $location, HttpService, xlRepoLinkerHost, $sce) {
 
-        $scope.trustSrc = function(src) {
+        $scope.trustSrc = function (src) {
             return $sce.trustAsResourceUrl(src);
         };
 
@@ -49,9 +49,11 @@ xlRepoLinker.controller('GoogleDriveController',
                     $scope.packageName = '';
                     $scope.status = '';
 
-                    chrome.identity.getAuthToken({ 'interactive': true }, function(token) {
+                    chrome.identity.getAuthToken({'interactive': false}, function (token) {
                         if (chrome.runtime.lastError) {
-                            $scope.errorResult = chrome.runtime.lastError;
+                            $scope.$apply(function () {
+                                $scope.errorResult = chrome.runtime.lastError.message;
+                            });
                         } else {
                             alert('my token is: ' + token);
                         }
