@@ -18,9 +18,9 @@ RunApp.prototype.begin = function () {
     program
         .option('-s, --server', 'Run server for Chrome Extension')
         .option('-i, --import <n>', 'Imports the data as xld snapshot for specified JIRA issue')
-        .option('-ir, --import-and-restart <n>', 'Imports and restarts the xld server after import')
+        .option('-r, --import-restart <n>', 'Imports and restarts the xld server after import')
         .option('-e, --export <n>', 'Exports xld snapshot by specified JIRA issue')
-        .option('-er, --export-and-restart <n>', 'Exports xld snapshot and if necessary overwrites already exported archive')
+        .option('-o, --export-overwrite <n>', 'Exports xld snapshot and if necessary overwrites already exported archive')
         .parse(process.argv);
 
     if (!process.argv.slice(2).length) {
@@ -33,12 +33,12 @@ RunApp.prototype.begin = function () {
         server.start();
     } else if (program.import) {
         sendResultToTheUser(cli.import(program.import));
-    } else if (program.importAndRestart) {
-        sendResultToTheUser(cli.import(program.importAndRestart, true));
+    } else if (program.importRestart) {
+        sendResultToTheUser(cli.import(program.importRestart, true));
     } else if (program.export) {
         sendResultToTheUser(cli.export(program.export));
-    } else if (program.exportAndRestart) {
-        sendResultToTheUser(cli.export(program.exportAndRestart, true));
+    } else if (program.exportOverwrite) {
+        sendResultToTheUser(cli.export(program.exportOverwrite, true));
     }
 
 };
