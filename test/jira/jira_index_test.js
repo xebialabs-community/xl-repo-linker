@@ -3,7 +3,7 @@ var expect = chai.expect;
 var rewire = require('rewire');
 
 var TestSetup = require('../utils/setup.js');
-var Jira = rewire('../../lib/jira/index.js');
+var JiraApi = rewire('../../lib/jira/api.js');
 
 describe('Jira index', function () {
 
@@ -16,12 +16,12 @@ describe('Jira index', function () {
             actualRequest = JSON.stringify(val);
         };
 
-        Jira.__set__({
+        JiraApi.__set__({
             XlreConfig: Config,
             rp: rp
         });
 
-        Jira.getIssue('DEPL-1100');
+        JiraApi.getIssue('DEPL-1100');
 
         var expectedValue = '{"url":"http://Bogdan:12345a@localhost:5555/rest/api/2/issue/DEPL-1100",' +
             '"method":"GET","headers":{"Accept":"application/json"}}';

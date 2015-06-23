@@ -1,19 +1,14 @@
-var program = require('commander');
 var cli = require('./cli.js');
 var server = require('./server.js');
+var XlreConfig = require('./../lib/common/config');
+
+var program = require('commander');
+var Q = require('q');
 
 var RunApp = function () {
 };
 
 RunApp.prototype.begin = function () {
-
-    function sendResultToTheUser(promiseResult) {
-        promiseResult.then(function (message) {
-            console.log(message);
-        }, function (err) {
-            console.error(err);
-        });
-    }
 
     program
         .option('-s, --server', 'Run server for Chrome Extension')
@@ -27,6 +22,14 @@ RunApp.prototype.begin = function () {
         program.server = true;
     }
 
+    XlreConfig.checkConfig().then(function () {
+        processCommand();
+    }, function (err) {
+        console.error(err);
+    });
+};
+
+var processCommand = function() {
     if (program.hasOwnProperty('help')) {
         program.outputHelp();
     } else if (program.server) {
@@ -40,8 +43,14 @@ RunApp.prototype.begin = function () {
     } else if (program.exportOverwrite) {
         sendResultToTheUser(cli.export(program.exportOverwrite, true));
     }
-
 };
 
+var sendResultToTheUser = function(promiseResult) {
+    promiseResult.then(function (message) {
+        console.log(message);
+    }, function (err) {
+        console.error(err);
+    });
+};
 
 module.exports = new RunApp();

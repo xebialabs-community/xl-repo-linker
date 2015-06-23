@@ -1,39 +1,41 @@
 module.exports = function(config) {
-    var browser = 'Chrome';
-
     config.set({
-        basePath: '../js',
-        frameworks: ['jasmine'],
+        basePath: '../src',
+        frameworks: ["mocha", "sinon-chai", "chai"],
         files: [
-            '../js/services/*.js',
-            '../js/controllers/*.js',
-            '../js/filters/*.js',
-            '../js/directives/*.js'
+            'bower_components/angular/angular.js',
+            'bower_components/angular-mocks/angular-mocks.js',
+            'js/app.js',
+            'js/services/*.js',
+            'js/controllers/*.js',
+            'js/filters/*.js',
+            'js/directives/**/*.js',
+            '../tests/unit/**/*.coffee'
         ],
         preprocessors: {
-            '../js/directives/**/*.html': 'ng-html2js',
-            '../js/**/*.js': 'coverage',
-            '**/*.coffee': 'coffee',
-            '**/*.html' : ["ng-html2js"]
+            'js/directives/**/*.html': 'ng-html2js',
+            'js/**/*.js': 'coverage',
+            'js/**/*.html' : ["ng-html2js"],
+            '../tests/unit/**/*.coffee': 'coffee'
         },
         ngHtml2JsPreprocessor: {
             moduleName: "templates"
         },
         coverageReporter: {
             type: 'cobertura',
-            dir: 'build/reports/karma/coverage/'
+            dir: '../build/reports/karma/coverage/'
         },
         junitReporter: {
-            outputFile: 'build/test-results/karma-test-results.xml'
+            outputFile: '../build/test-results/karma-test-results.xml'
         },
         exclude: [],
         reporters: ['progress', 'coverage', 'junit'],
-        port: 9997,
-        runnerPort: 9100,
+        port: 5437,
+        runnerPort: 3122,
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: false,
-        browsers: [browser],
+        browsers: ['PhantomJS'],
         captureTimeout: 10000,
         singleRun: true
     });

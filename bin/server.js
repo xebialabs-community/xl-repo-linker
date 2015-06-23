@@ -10,8 +10,6 @@ var path = require('path');
 var Decompress = require('decompress');
 var Q = require('q');
 
-var isInvalidConfiguration = false;
-
 var Server = function () {
 };
 
@@ -21,7 +19,7 @@ function sendResultToTheUser(res, promiseResult) {
     promiseResult.then(function (message) {
         res.send(message);
     }, function (err) {
-        res.send(err);
+        res.send(500, err);
     });
 }
 
@@ -42,32 +40,8 @@ app.get('/jira/pick', function (req, res) {
 });
 
 app.get('/jira/host', function (req, res) {
-    var deferred = Q.defer();
-
-    var jiraHost = XlreConfig.readXlreConfig().jira.host;
-    var xldHome = XlreConfig.getXldLocation();
-    if (XlreConfig.isValidConfigFile()) {
-        isInvalidConfiguration = true;
-        res.send(500, 'Please provide all values in .xl-repo-linker-config.yml in your home directory');
-    } else if (!fs.existsSync(xldHome)) {
-        res.send(500, 'XL Deploy home doesn\'t exist [' + xldHome + ']');
-    } else {
-        jiraCredentials().then(function (msg) {
-            if (isInvalidConfiguration) {
-                XlreConfig.encodePlainTextPasswords();
-            }
-            deferred.resolve(msg);
-        }, function (err) {
-            deferred.reject(err);
-        });
-
-        if (isInvalidConfiguration) {
-            XlreConfig.encodePlainTextPasswords();
-        }
-    }
-
-    deferred.promise.then(function () {
-        res.send(jiraHost);
+    XlreConfig.checkConfig().then(function () {
+        res.send(XlreConfig.readXlreConfig().jira.host);
     }, function (err) {
         res.send(500, err);
     });

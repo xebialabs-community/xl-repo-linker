@@ -1,6 +1,8 @@
 module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-mocha-test')
   grunt.loadNpmTasks('grunt-release')
+
+  require('grunt-karma')(grunt)
   require("load-grunt-tasks")(grunt)
 
   webDir = "chrome-extension"
@@ -13,7 +15,16 @@ module.exports = (grunt) ->
           captureFile: 'results.txt'
           quiet: false
           clearRequireCache: false
-        src: ['test/**/*.js', 'chrome-extension/tests']
+        src: ['test/**/*.js']
+    karma:
+      options:
+        configFile: "chrome-extension/tests/karma.unit.js"
+      singleRun:
+        singleRun: true
+        autoWatch: false
+      reload:
+        singleRun: false
+        autoWatch: true
     connect:
       chrome:
         options:
@@ -38,6 +49,6 @@ module.exports = (grunt) ->
           "#{webDir}/src/js/**/*.js"
         ]
 
-  grunt.registerTask "default", ["mochaTest"]
+  grunt.registerTask "default", ["mochaTest", "karma:singleRun"]
 
   grunt.registerTask "serve", ["configureProxies:dev", "connect:chrome", "watch"]

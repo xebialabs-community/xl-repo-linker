@@ -1,34 +1,34 @@
 
-[0m[0m
-[0m  Common config[0m
-[2K[0G  [32m  ✓[0m[90m should replace config [0m
-[2K[0G  [32m  ✓[0m[90m should return xld home location [0m
-[2K[0G  [32m  ✓[0m[90m should update config key [0m
-[2K[0G  [32m  ✓[0m[90m should encode plain text password in configuration file [0m
-[2K[0G  [32m  ✓[0m[90m should encode plain text password in configuration file with not encrypted values [0m
-[2K[0G  [32m  ✓[0m[90m should encode plain text password in configuration file [0m
-[2K[0G  [32m  ✓[0m[90m should read config file [0m
-[2K[0G  [32m  ✓[0m[90m should return xl-repo-linker home [0m
 
-[0m  Common encoding[0m
-[2K[0G  [32m  ✓[0m[90m should encode to base64 [0m
-[2K[0G  [32m  ✓[0m[90m should decode from base64 to the plain text [0m
+  Common config
+    ✓ should replace config 
+    ✓ should return xld home location 
+    ✓ should update config key 
+    ✓ should encode plain text password in configuration file 
+    ✓ should encode plain text password in configuration file with not encrypted values 
+    ✓ should encode plain text password in configuration file 
+    ✓ should read config file 
+    ✓ should return xl-repo-linker home 
 
-[0m  Common files[0m
-[2K[0G  [32m  ✓[0m[90m should walk the directory [0m
+  Common encoding
+    ✓ should encode to base64 
+    ✓ should decode from base64 to the plain text 
 
-[0m  Common http[0m
-[2K[0G  [32m  ✓[0m[90m should create url with basic params [0m
+  Common files
+    ✓ should walk the directory 
 
-[0m  Common logging[0m
-[2K[0G  [32m  ✓[0m[90m should log an error in console when the message is not undefined [0m
+  Common http
+    ✓ should create url with basic params 
 
-[0m  Jira index[0m
-[2K[0G  [32m  ✓[0m[90m should get issue by issue name [0m
+  Common logging
+    ✓ should log an error in console when the message is not undefined 
 
-[0m  Services manifest[0m
-[2K[0G  [32m  ✓[0m[90m should create .plugin with the list of .xldp and .jar files [0m
+  Jira index
+    ✓ should get issue by issue name 
+
+  Services manifest
+    ✓ should create .plugin with the list of .xldp and .jar files 
 
 
-[92m [0m[32m 15 passing[0m[90m (34ms)[0m
+  15 passing (30ms)
 
