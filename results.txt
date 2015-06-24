@@ -1,5 +1,9 @@
 
 
+  Cache
+    ✓ should cache values 
+    ✓ should return undefined if no values in cache 
+
   Common config
     ✓ should replace config 
     ✓ should return xld home location 
@@ -30,5 +34,5 @@
     ✓ should create .plugin with the list of .xldp and .jar files 
 
 
-  15 passing (30ms)
+  17 passing (33ms)
 

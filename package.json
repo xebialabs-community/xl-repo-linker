@@ -3,6 +3,7 @@
   "version": "0.1.6",
   "main": "main.js",
   "devDependencies": {
+    "cache-storage": "2.0.0",
     "chai": "2.1.2",
     "fs-mock": "1.1.3",
     "grunt": "^0.4.5",
@@ -32,7 +33,8 @@
     "mock-promises": "0.3.0",
     "rewire": "2.3.1",
     "should": "5.2.0",
-    "sinon": "1.14.1"
+    "sinon": "1.14.1",
+    "sinon-chai": "2.8.0"
   },
   "scripts": {
     "start": "node ./bin/xl-repo-linker",
@@ -51,7 +53,7 @@
   "author": "Bogdan Nechyporenko",
   "dependencies": {
     "archiver": "0.14.3",
-    "async": "0.9.0",
+    "async": "1.2.1",
     "bower": "1.4.1",
     "bower-installer": "1.2.0",
     "cli": "0.6.5",

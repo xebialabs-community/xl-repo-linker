@@ -1,6 +1,7 @@
-var cli = require('./cli.js');
-var server = require('./server.js');
+var cli = require('./cli');
+var server = require('./server');
 var XlreConfig = require('./../lib/common/config');
+var XlreCache = require('./../lib/common/cache');
 
 var program = require('commander');
 var Q = require('q');
@@ -16,20 +17,26 @@ RunApp.prototype.begin = function () {
         .option('-r, --import-restart <n>', 'Imports and restarts the xld server after import')
         .option('-e, --export <n>', 'Exports xld snapshot by specified JIRA issue')
         .option('-o, --export-overwrite <n>', 'Exports xld snapshot and if necessary overwrites already exported archive')
+        .option('--xld-home <n>', 'Override XLD home specified in configuration file')
         .parse(process.argv);
 
     if (!process.argv.slice(2).length) {
         program.server = true;
     }
 
+    if (program.xldHome) {
+        XlreCache.store('xldHome', program.xldHome);
+    }
+
     XlreConfig.checkConfig().then(function () {
         processCommand();
-    }, function (err) {
+    }).catch(function (err) {
         console.error(err);
     });
 };
 
 var processCommand = function() {
+
     if (program.hasOwnProperty('help')) {
         program.outputHelp();
     } else if (program.server) {
