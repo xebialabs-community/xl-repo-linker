@@ -1,6 +1,6 @@
 {
   "name": "xl-repo-linker",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "main": "main.js",
   "devDependencies": {
     "cache-storage": "2.0.0",
