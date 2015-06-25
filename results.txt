@@ -7,10 +7,12 @@
   Common config
     ✓ should replace config 
     ✓ should return xld home location 
+    ✓ should create and update config key 
     ✓ should update config key 
     ✓ should encode plain text password in configuration file 
     ✓ should encode plain text password in configuration file with not encrypted values 
     ✓ should encode plain text password in configuration file 
+    ✓ should append common section with default values when it is missing. (Upgrade scenario) 
     ✓ should read config file 
     ✓ should return xl-repo-linker home 
 
@@ -34,5 +36,5 @@
     ✓ should create .plugin with the list of .xldp and .jar files 
 
 
-  17 passing (33ms)
+  19 passing (47ms)
 

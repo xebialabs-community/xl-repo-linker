@@ -20,6 +20,13 @@ describe("Common config", function () {
         expect(Config.getXldLocation()).to.equal('/home/user/xld');
     });
 
+    it("should create and update config key", function () {
+        var Config = TestSetup.setupConfigFile();
+
+        Config.updateKey('common.mode', 'local');
+        expect(Config.readXlreConfig().common.mode).to.equal('local');
+    });
+
     it("should update config key", function () {
         var Config = TestSetup.setupConfigFile();
 
@@ -51,6 +58,13 @@ describe("Common config", function () {
         config2 = Config.readXlreConfig();
         expect(config2.jira.password).to.equal('MTIzNDVh');
         expect(config2.xld.password).to.equal('MjM0NTZh');
+    });
+
+    it("should append common section with default values when it is missing. (Upgrade scenario)", function() {
+        var Config = TestSetup.setupAlreadyEncryptedConfigFile();
+        Config.checkConfig();
+
+        expect(Config.getMode()).to.equal('jira');
     });
 
     it("should read config file", function () {

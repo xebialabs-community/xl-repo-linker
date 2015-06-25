@@ -11,6 +11,12 @@ var RunApp = function () {
 
 RunApp.prototype.begin = function () {
 
+    XlreConfig.checkConfig().then(function () {
+        processCommand();
+    }).catch(function (err) {
+        console.error(err);
+    });
+
     program
         .option('-s, --server', 'Run server for Chrome Extension')
         .option('-i, --import <n>', 'Imports the data as xld snapshot for specified JIRA issue')
@@ -27,12 +33,6 @@ RunApp.prototype.begin = function () {
     if (program.xldHome) {
         XlreCache.store('xldHome', program.xldHome);
     }
-
-    XlreConfig.checkConfig().then(function () {
-        processCommand();
-    }).catch(function (err) {
-        console.error(err);
-    });
 };
 
 var processCommand = function() {
