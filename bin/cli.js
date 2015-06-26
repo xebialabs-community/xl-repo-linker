@@ -17,12 +17,12 @@ var getProvider = function() {
     return local;
 };
 
-Cli.prototype.import = function (jiraIssue, restartServerAfterImport) {
-    return getProvider().import.execute(jiraIssue, restartServerAfterImport);
+Cli.prototype.import = function (name, restartServerAfterImport) {
+    return getProvider().import.execute(name, restartServerAfterImport);
 };
 
-Cli.prototype.export = function (jiraIssue, overwriteAlreadyExported) {
-    return getProvider().export.execute(jiraIssue, overwriteAlreadyExported);
+Cli.prototype.export = function (name, overwriteAlreadyExported) {
+    return getProvider().export.execute(name, overwriteAlreadyExported);
 };
 
 module.exports = new Cli();
