@@ -34,6 +34,21 @@ To update to the latest version after a while:
 To check current version of xl-repo-linker:
 
     npm list -g | grep xl-repo-linker
+    
+## How does it work
+
+  Currently it is available 1 out of 3 modes:
+     
+  * Local (by default) - the local repository in ~/.xld-repo will be created and you can save all your snapshots locally.
+  It is perfectly suits the needs when you don't need to share your snapshots with nobody else, but just recover your previous
+  state.
+  
+  * Jira - when you want to attach your snapshot to Jira issue and share your snapshot with a person who has an access to Jira as well.
+   It does work only with relatively small artifacts (by default it is 10Mb, but administrator can increase this value).
+  
+  * Google Drive - when your snapshot is really big and you don't want to make Jira slow, this is a better way to make share. 
+  
+  This modes you can change in the configuration file or override it with extra option: --mode <mode>
 
 ## How to run the server:
 

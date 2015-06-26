@@ -1,21 +1,16 @@
 var cli = require('./cli');
-var server = require('./server');
+var server = require('./../lib/services/server');
 var XlreConfig = require('./../lib/common/config');
 var XlreCache = require('./../lib/common/cache');
 
 var program = require('commander');
 var Q = require('q');
 
+
 var RunApp = function () {
 };
 
 RunApp.prototype.begin = function () {
-
-    XlreConfig.checkConfig().then(function () {
-        processCommand();
-    }).catch(function (err) {
-        console.error(err);
-    });
 
     program
         .option('-s, --server', 'Run server for Chrome Extension')
@@ -23,24 +18,53 @@ RunApp.prototype.begin = function () {
         .option('-r, --import-restart <n>', 'Imports and restarts the xld server after import')
         .option('-e, --export <n>', 'Exports xld snapshot by specified JIRA issue')
         .option('-o, --export-overwrite <n>', 'Exports xld snapshot and if necessary overwrites already exported archive')
-        .option('--xld-home <n>', 'Override XLD home specified in configuration file')
+        .option('--xld-home <n>', 'Override XLD home specified in the configuration file')
+        .option('--mode <n>', 'Override the mode specified in the configuration file')
         .parse(process.argv);
 
     if (!process.argv.slice(2).length) {
         program.server = true;
     }
 
+    overrideDefaultValues();
+
+    XlreConfig.checkConfig().then(prepareProcessCommand).then(processCommand).catch(function (err) {
+        console.error(err);
+    });
+};
+
+var overrideDefaultValues = function() {
     if (program.xldHome) {
         XlreCache.store('xldHome', program.xldHome);
     }
+
+    if (program.mode) {
+        XlreCache.store('mode', program.mode);
+    }
 };
 
-var processCommand = function() {
+var prepareProcessCommand = function () {
+    var deferred = Q.defer();
+
+    if (program.server || XlreConfig.getMode() === 'google-drive') {
+        server.start(true).then(function (data) {
+            deferred.resolve(data);
+        }).catch(function (err) {
+            deferred.reject(err);
+        })
+    } else {
+        deferred.resolve();
+    }
+
+    return deferred.promise;
+};
+
+var processCommand = function (data) {
+
+    console.log(data);
 
     if (program.hasOwnProperty('help')) {
         program.outputHelp();
-    } else if (program.server) {
-        server.start();
     } else if (program.import) {
         sendResultToTheUser(cli.import(program.import));
     } else if (program.importRestart) {
@@ -52,7 +76,7 @@ var processCommand = function() {
     }
 };
 
-var sendResultToTheUser = function(promiseResult) {
+var sendResultToTheUser = function (promiseResult) {
     promiseResult.then(function (message) {
         console.log(message);
     }, function (err) {
