@@ -59,9 +59,7 @@ var prepareProcessCommand = function () {
     return deferred.promise;
 };
 
-var processCommand = function (data) {
-
-    console.log(data);
+var processCommand = function () {
 
     if (program.hasOwnProperty('help')) {
         program.outputHelp();
