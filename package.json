@@ -50,7 +50,7 @@
     "repo-linker"
   ],
   "license": "ISC",
-  "description": "The tool to import and export snapshots of XLD data to accelerate the process of issue reproduction.",
+  "description": "The tool to import and export snapshots of XLD data and configurations.",
   "author": "Bogdan Nechyporenko",
   "dependencies": {
     "archiver": "0.14.3",

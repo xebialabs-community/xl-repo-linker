@@ -70,4 +70,4 @@ You can see all options by running
 
 ## Chrome Extension
  
-   After you installed the server part you need to install the Chrome Extension. Currently it is available by [this link](https://chrome.google.com/webstore/detail/xl-repo-linker/eijgifcjmgogkgcindlfkhebacniffod)
+   After you installed the server part you need to install the Chrome Extension. Currently it is available by [this link](https://chrome.google.com/webstore/detail/xl-repo-linker/aclpjhlfbodcpenmbeibgocfpknkllcn)
