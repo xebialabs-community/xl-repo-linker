@@ -37,7 +37,7 @@ To check current version of xl-repo-linker:
     
 ## How does it work
 
-  Currently it is available 1 out of 3 modes:
+  Currently it is available 3 modes:
      
   * Local (by default) - the local repository in ~/.xld-repo will be created and you can save all your snapshots locally.
   It is perfectly suits the needs when you don't need to share your snapshots with nobody else, but just recover your previous
