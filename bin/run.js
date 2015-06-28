@@ -28,18 +28,27 @@ RunApp.prototype.begin = function () {
 
     overrideDefaultValues();
 
-    XlreConfig.checkConfig().then(prepareProcessCommand).then(processCommand).catch(function (err) {
-        console.error(err);
-    });
+    XlreConfig.checkConfig().
+        then(prepareProcessCommand).
+        then(processCommand).
+        then(function (message) {
+            console.log(message);
+        }).catch(function (err) {
+            console.error(err);
+        });
 };
 
-var overrideDefaultValues = function() {
+var overrideDefaultValues = function () {
     if (program.xldHome) {
         XlreCache.store('xldHome', program.xldHome);
     }
 
     if (program.mode) {
         XlreCache.store('mode', program.mode);
+    }
+
+    if (program.server) {
+        XlreCache.store('mode', 'jira');
     }
 };
 
@@ -59,19 +68,25 @@ var prepareProcessCommand = function () {
     return deferred.promise;
 };
 
-var processCommand = function () {
+var processCommand = function (data) {
+    var deferred = Q.defer();
 
     if (program.hasOwnProperty('help')) {
         program.outputHelp();
+        deferred.resolve(data);
     } else if (program.import) {
-        sendResultToTheUser(cli.import(program.import));
+        return cli.import(program.import);
     } else if (program.importRestart) {
-        sendResultToTheUser(cli.import(program.importRestart, true));
+        return cli.import(program.importRestart, true);
     } else if (program.export) {
-        sendResultToTheUser(cli.export(program.export));
+        return cli.export(program.export);
     } else if (program.exportOverwrite) {
-        sendResultToTheUser(cli.export(program.exportOverwrite, true));
+        return cli.export(program.exportOverwrite, true);
+    } else {
+        deferred.resolve(data);
     }
+
+    return deferred.promise;
 };
 
 var sendResultToTheUser = function (promiseResult) {
