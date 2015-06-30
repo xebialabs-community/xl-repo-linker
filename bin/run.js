@@ -103,12 +103,4 @@ var processCommand = function (data) {
     return deferred.promise;
 };
 
-var sendResultToTheUser = function (promiseResult) {
-    promiseResult.then(function (message) {
-        console.log(message);
-    }, function (err) {
-        console.error(err);
-    });
-};
-
 module.exports = new RunApp();
