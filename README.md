@@ -43,11 +43,20 @@ To check current version of xl-repo-linker:
   It is perfectly suits the needs when you don't need to share your snapshots with nobody else, but just recover your previous
   state.
   
+  
+    xl-repo-linker -e my-snapshot-name --mode local # (alternatively you can change the mode inside ~/.xl-repo-linker-config.yml)
+  
   * Jira - when you have to attach your snapshot to Jira issue and share your snapshot with a person who has an access to Jira as well.
    It does work only with relatively small artifacts (by default it is 10Mb, but administrator can increase this value).
+
+
+    xl-repo-linker -e DEPL-1000 --mode jira # (alternatively you can change the mode inside ~/.xl-repo-linker-config.yml)
   
   * Google Drive - when your snapshot is big and you don't want to make Jira slow, or both parties doesn't have access to Jira then 
-  this way becomes better to share. 
+  this way becomes better to share.
+
+
+    xl-repo-linker -e my-snapshot-name --mode google-drive # (alternatively you can change the mode inside ~/.xl-repo-linker-config.yml)
   
   This modes you can change in the configuration file or override it with extra option: --mode <mode>
 

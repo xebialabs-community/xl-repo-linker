@@ -1,7 +1,9 @@
 var cli = require('./cli');
+var Files = require('../lib/common/files');
 var server = require('./../lib/services/server');
-var XlreConfig = require('./../lib/common/config');
 var XlreCache = require('./../lib/common/cache');
+var XlreConfig = require('./../lib/common/config');
+var XlreSnapshot = require('./../lib/services/snapshot');
 
 var program = require('commander');
 var Q = require('q');
@@ -20,10 +22,22 @@ RunApp.prototype.begin = function () {
         .option('-o, --export-overwrite <n>', 'Exports xld snapshot and if necessary overwrites already exported archive')
         .option('--xld-home <n>', 'Override XLD home specified in the configuration file')
         .option('--mode <n>', 'Override the mode specified in the configuration file')
+        .option('--show-size', 'Show the size of xld snapshot')
         .parse(process.argv);
 
+    processOptions();
+};
+
+var processOptions = function() {
     if (!process.argv.slice(2).length) {
         program.server = true;
+    }
+
+    if (program.showSize) {
+        XlreSnapshot.create().then(function(archiveZipPath) {
+            console.log("XLD snapshot size is: " + Files.getSize(archiveZipPath) + " Mb");
+        });
+        return;
     }
 
     overrideDefaultValues();
