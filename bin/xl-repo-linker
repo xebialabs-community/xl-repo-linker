@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-var app = require('../lib/app');
-
 var run = require('./run.js');
 var config = require('../lib/common/config.js');
 
