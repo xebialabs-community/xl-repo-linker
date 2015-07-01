@@ -1,5 +1,10 @@
-[XL Repo Linker](http://slides.com/acierto/xl-repo-linker)
+XL Repo Linker
 =======
+
+You can find slides [here] (http://slides.com/acierto/xl-repo-linker)
+
+Introduction
+------------
 
 When you reproduced some issue in XL Deploy and you want to share your environment with somebody else this tool will 
 be helpful for you. Central point of communication of `snapshots` is Jira. When you prepared your environment you just 
