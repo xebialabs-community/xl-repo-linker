@@ -2,6 +2,7 @@ var cli = require('./cli');
 var Files = require('../lib/common/files');
 var server = require('./../lib/services/server');
 var XlreCache = require('./../lib/common/cache');
+var XlreDb = require('./../lib/services/db');
 var XlreConfig = require('./../lib/common/config');
 var XlreSnapshot = require('./../lib/services/snapshot');
 
@@ -23,18 +24,19 @@ RunApp.prototype.begin = function () {
         .option('--xld-home <n>', 'Override XLD home specified in the configuration file')
         .option('--mode <n>', 'Override the mode specified in the configuration file')
         .option('--show-size', 'Show the size of xld snapshot')
+        .option('--clean-gdtoken', 'Remove cached Google Drive token. Could be useful if you logged in by different user')
         .parse(process.argv);
 
     processOptions();
 };
 
-var processOptions = function() {
+var processOptions = function () {
     if (!process.argv.slice(2).length) {
         program.server = true;
     }
 
     if (program.showSize) {
-        XlreSnapshot.create().then(function(archiveZipPath) {
+        XlreSnapshot.create().then(function (archiveZipPath) {
             console.log("XLD snapshot size is: " + Files.getSize(archiveZipPath) + " Mb");
         });
         return;
@@ -67,19 +69,25 @@ var overrideDefaultValues = function () {
 };
 
 var prepareProcessCommand = function () {
-    var deferred = Q.defer();
+    var promises = [];
+    var serverDefer = Q.defer();
+    var cleanTokenPromise;
 
-    if (program.server || XlreConfig.getMode() === 'google-drive') {
-        server.start(true).then(function (data) {
-            deferred.resolve(data);
-        }).catch(function (err) {
-            deferred.reject(err);
-        })
-    } else {
-        deferred.resolve();
+    if (program.cleanGdtoken) {
+        cleanTokenPromise = XlreDb.remove({key: "google_drive_oauth_token"});
+        promises.push(cleanTokenPromise);
     }
 
-    return deferred.promise;
+    if (program.server || XlreConfig.getMode() === 'google-drive') {
+        promises.push(serverDefer.promise);
+        server.start(true).then(function (data) {
+            serverDefer.resolve(data);
+        }).catch(function (err) {
+            serverDefer.reject(err);
+        })
+    }
+
+    return Q.all(promises);
 };
 
 var processCommand = function (data) {
