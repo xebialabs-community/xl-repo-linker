@@ -70,6 +70,7 @@
     "lodash-node": "3.3.1",
     "mime": "1.3.4",
     "mkdirp": "0.5.1",
+    "mongolab-provider": "1.1.1",
     "ncp": "2.0.0",
     "nedb": "1.1.2",
     "open": "0.0.5",

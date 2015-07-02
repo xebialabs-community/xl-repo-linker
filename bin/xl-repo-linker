@@ -3,6 +3,7 @@ var run = require('./run.js');
 var config = require('../lib/common/config.js');
 
 config.createDefaultConfigFile();
+config.configUpgrader();
 config.encodePlainTextPasswords();
 
 run.begin();

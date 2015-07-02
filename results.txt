@@ -8,6 +8,7 @@
     ✓ should replace config 
     ✓ should return xld home location 
     ✓ should create and update config key 
+    1) should add a comment for a config key
     ✓ should update config key 
     ✓ should encode plain text password in configuration file 
     ✓ should encode plain text password in configuration file with not encrypted values 
@@ -36,5 +37,12 @@
     ✓ should create .plugin with the list of .xldp and .jar files 
 
 
-  19 passing (46ms)
+  19 passing (53ms)
+  1 failing
+
+  1) Common config should add a comment for a config key:
+     AssertionError: expected null to be undefined
+  
+
+
 
