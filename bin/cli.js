@@ -22,7 +22,8 @@ Cli.prototype.import = function (name, restartServerAfterImport) {
 };
 
 Cli.prototype.export = function (name, overwriteAlreadyExported) {
-    return getProvider().export.execute(name, overwriteAlreadyExported);
+    var force = overwriteAlreadyExported ? overwriteAlreadyExported.toString() : "false";
+    return getProvider().export.execute(name, force);
 };
 
 module.exports = new Cli();
