@@ -5,9 +5,11 @@ var XlreCache = require('./../lib/common/cache');
 var XlreDb = require('./../lib/services/db');
 var XlreConfig = require('./../lib/common/config');
 var XlreSnapshot = require('./../lib/services/snapshot');
+var XlreXld = require('./../lib/common/xld');
 
 var program = require('commander');
 var Q = require('q');
+var _ = require('lodash-node/compat');
 
 
 var RunApp = function () {
@@ -35,23 +37,27 @@ var processOptions = function () {
         program.server = true;
     }
 
+    overrideDefaultValues();
+
+    XlreConfig.checkConfig().
+        then(function () {
+            return XlreXld.checkXldFolder();
+        }).
+        then(prepareProcessCommand).
+        then(processCommand).
+        then(function (message) {
+            if (!_.isEmpty(message)) {
+                console.log(message);
+            }
+        }).catch(function (err) {
+            console.error(err);
+        });
+
     if (program.showSize) {
         XlreSnapshot.create().then(function (archiveZipPath) {
             console.log("XLD snapshot size is: " + Files.getSize(archiveZipPath) + " Mb");
         });
-        return;
     }
-
-    overrideDefaultValues();
-
-    XlreConfig.checkConfig().
-        then(prepareProcessCommand).
-        then(processCommand).
-        then(function (message) {
-            console.log(message);
-        }).catch(function (err) {
-            console.error(err);
-        });
 };
 
 var overrideDefaultValues = function () {

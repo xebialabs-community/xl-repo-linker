@@ -16,11 +16,6 @@ describe("Common config", function () {
         expect(JSON.stringify(Config.readXlreConfig())).to.equal(JSON.stringify(res));
     });
 
-    it("should return xld home location", function () {
-        var Config = TestSetup.setupConfigFile();
-        expect(Config.getXldLocation()).to.equal('/home/user/xld');
-    });
-
     it("should create and update config key", function () {
         var Config = TestSetup.setupConfigFile();
 

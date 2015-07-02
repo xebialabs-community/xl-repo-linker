@@ -3,8 +3,9 @@ var expect = chai.expect;
 var FS = require('fs-mock');
 var rewire = require('rewire');
 
-var TestSetup = require('../utils/setup.js');
-var Manifest = rewire('../../lib/services/manifest.js');
+var TestSetup = require('../utils/setup');
+var Manifest = rewire('../../lib/services/manifest');
+var XlreXld = rewire('../../lib/common/xld');
 
 describe('Services manifest', function () {
 
@@ -30,8 +31,13 @@ describe('Services manifest', function () {
             pluginsFilePath = filename;
         };
 
+        XlreXld.__set__({
+            XlreConfig: Config
+        });
+
         Manifest.__set__({
             XlreConfig: Config,
+            XlreXld: XlreXld,
             fs: fs
         });
 

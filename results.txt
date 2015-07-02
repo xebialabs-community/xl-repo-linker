@@ -6,7 +6,6 @@
 
   Common config
     ✓ should replace config 
-    ✓ should return xld home location 
     ✓ should create and update config key 
     ✓ should update config key 
     ✓ should encode plain text password in configuration file 
@@ -26,9 +25,6 @@
   Common http
     ✓ should create url with basic params 
 
-  Common logging
-    ✓ should log an error in console when the message is not undefined 
-
   Jira index
     ✓ should get issue by issue name 
 
@@ -36,5 +32,5 @@
     ✓ should create .plugin with the list of .xldp and .jar files 
 
 
-  19 passing (53ms)
+  17 passing (48ms)
 
