@@ -1,5 +1,6 @@
 var chai = require('chai');
 var expect = chai.expect;
+
 var TestSetup = require('../utils/setup.js');
 
 describe("Common config", function () {
@@ -62,7 +63,6 @@ describe("Common config", function () {
 
     it("should append common section with default values when it is missing. (Upgrade scenario)", function() {
         var Config = TestSetup.setupAlreadyEncryptedConfigFile();
-        Config.configUpgrader();
         Config.checkConfig();
 
         expect(Config.getMode()).to.equal('local');

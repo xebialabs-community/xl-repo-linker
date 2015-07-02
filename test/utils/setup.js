@@ -1,7 +1,7 @@
 var FS = require('fs-mock');
 var rewire = require("rewire");
 
-var Config = rewire('../../lib/common/config.js');
+var Config = rewire('../../lib/common/config');
 
 var TestSetup = function(){};
 
@@ -78,7 +78,9 @@ TestSetup.prototype.setupAlreadyEncryptedConfigFile = function () {
             '  home: /home/user/xld\n' +
             '  login: admin\n' +
             '  password: MjM0NTZh\n' +
-            '  encrypted: true\n'
+            '  encrypted: true\n' +
+            'common:\n' +
+            '  mode: local'
         }
     });
     Config.__set__("fs", fs);

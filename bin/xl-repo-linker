@@ -1,9 +1,14 @@
 #!/usr/bin/env node
-var run = require('./run.js');
-var config = require('../lib/common/config.js');
+var run = require('./run');
 
-config.createDefaultConfigFile();
-config.configUpgrader();
-config.encodePlainTextPasswords();
+var XlreConfigUpgrade = require('../lib/upgrade/config-upgrade');
+var XlreConfig = require('../lib/common/config');
 
-run.begin();
+XlreConfig.createDefaultConfigFile();
+XlreConfig.encodePlainTextPasswords();
+
+XlreConfigUpgrade.run().then(function () {
+    run.begin();
+}).fail(function (err) {
+    console.log(err);
+});
