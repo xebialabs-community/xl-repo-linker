@@ -1,7 +1,7 @@
 XL Repo Linker
 =======
 
-You can find slides [here] (http://slides.com/acierto/xl-repo-linker)
+You can find slides [here](http://slides.com/acierto/xl-repo-linker)
 
 Introduction
 ------------
