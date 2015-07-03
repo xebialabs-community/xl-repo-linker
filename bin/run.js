@@ -6,6 +6,7 @@ var XlreDb = require('./../lib/services/db');
 var XlreConfig = require('./../lib/common/config');
 var XlreSnapshot = require('./../lib/services/snapshot');
 var XlreXld = require('./../lib/common/xld');
+var XlreConfigValidate = require('./../lib/config/validate');
 
 var program = require('commander');
 var Q = require('q');
@@ -39,7 +40,7 @@ var processOptions = function () {
 
     overrideDefaultValues();
 
-    XlreConfig.checkConfig().
+    XlreConfigValidate.checkConfig().
         then(function () {
             return XlreXld.checkXldFolder();
         }).
