@@ -7,7 +7,7 @@ var XlreConfig = require('./../lib/common/config');
 var Cli = function () {
 };
 
-var getProvider = function() {
+var getProvider = function () {
     if (XlreConfig.getMode() === "jira") {
         return jira;
     } else if (XlreConfig.getMode() === "google-drive") {
@@ -18,7 +18,8 @@ var getProvider = function() {
 };
 
 Cli.prototype.import = function (name, restartServerAfterImport) {
-    return getProvider().import.execute(name, restartServerAfterImport);
+    var restart = restartServerAfterImport ? restartServerAfterImport.toString() : "false";
+    return getProvider().import.execute(name, restart);
 };
 
 Cli.prototype.export = function (name, overwriteAlreadyExported) {
