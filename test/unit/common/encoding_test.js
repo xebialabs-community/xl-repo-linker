@@ -1,6 +1,6 @@
 var chai = require('chai');
 var expect = chai.expect;
-var Encoding = require('../../lib/common/encoding.js');
+var Encoding = require('../../../lib/common/encoding.js');
 
 describe("Common encoding", function () {
     it("should encode to base64", function () {

@@ -1,5 +1,5 @@
 var assert = require('assert');
-var Cache = require('../../lib/common/cache.js');
+var Cache = require('../../../lib/common/cache.js');
 var _ = require('lodash-node/compat');
 
 describe("Cache", function () {

@@ -4,8 +4,8 @@ var FS = require('fs-mock');
 var rewire = require('rewire');
 
 var TestSetup = require('../utils/setup');
-var Manifest = rewire('../../lib/services/manifest');
-var XlreXld = rewire('../../lib/common/xld');
+var Manifest = rewire('../../../lib/services/manifest');
+var XlreXld = rewire('../../../lib/common/xld');
 
 describe('Services manifest', function () {
 

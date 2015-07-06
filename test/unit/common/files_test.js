@@ -3,7 +3,7 @@ var rewire = require("rewire");
 var expect = chai.expect;
 var FS = require('fs-mock');
 
-var Files = rewire('../../lib/common/files.js');
+var Files = rewire('../../../lib/common/files.js');
 
 describe("Common files", function () {
     it("should walk the directory", function () {

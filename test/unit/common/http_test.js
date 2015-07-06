@@ -4,7 +4,7 @@ var FS = require('fs-mock');
 var rewire = require("rewire");
 
 var TestSetup = require('../utils/setup.js');
-var Http = rewire('../../lib/common/http.js');
+var Http = rewire('../../../lib/common/http.js');
 
 describe("Common http", function () {
 

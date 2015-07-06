@@ -32,5 +32,5 @@
     ✓ should create .plugin with the list of .xldp and .jar files 
 
 
-  17 passing (46ms)
+  17 passing (48ms)
 

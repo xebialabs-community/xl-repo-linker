@@ -1,7 +1,7 @@
 var FS = require('fs-mock');
 var rewire = require("rewire");
 
-var Config = rewire('../../lib/common/config');
+var Config = rewire('../../../lib/common/config');
 
 var TestSetup = function(){};
 

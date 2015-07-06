@@ -15,7 +15,7 @@ module.exports = (grunt) ->
           captureFile: 'results.txt'
           quiet: false
           clearRequireCache: false
-        src: ['test/**/*.js']
+        src: ['test/unit/**/*.js']
     karma:
       options:
         configFile: "chrome-extension/tests/karma.unit.js"
