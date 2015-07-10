@@ -16,9 +16,14 @@ To setup XL Repo Linker you need to install 2 parts of application: npm module a
 Installation
 -------------
 
-When you run xl-repo-linker first time, it will create **.xl-repo-linker-config.yml** in your user home directory, 
-where you will need to provide for some of the properties your specific values related to credentials of Jira user and XL Deploy.
+When you run xl-repo-linker first time, just by running xl-repo-linker command, it will 
+create **.xl-repo-linker-config.yml** in your user home directory, where you will need to provide for some of the 
+properties your specific values related to credentials of Jira user and XL Deploy.
 
+If you skip some required fields in the configuration file XL Repo Linker will tell you about it when you try to run it. 
+ 
+For using Google Drive mode you need to ask me Google Drive Key and Mongo ApiKey. I don't add it by default there due to 
+security concerns. 
 
 ## Installing globally:
 
@@ -86,3 +91,8 @@ You can see all options by running
 ## Chrome Extension
  
    After you installed the server part you need to install the Chrome Extension. Currently it is available by [this link](https://chrome.google.com/webstore/detail/xl-repo-linker/aclpjhlfbodcpenmbeibgocfpknkllcn)
+   
+## Feedback
+ 
+   If you feel lack of documentation or not clear enough how to use or setup it, please let me now about it. Feel free to add your comments/improvement/issues 
+   [here](https://github.com/xebialabs-community/xl-repo-linker/issues)
