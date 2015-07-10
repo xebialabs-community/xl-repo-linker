@@ -7,9 +7,10 @@ Introduction
 ------------
 
 When you reproduced some issue in XL Deploy and you want to share your environment with somebody else this tool will 
-be helpful for you. Central point of communication of `snapshots` is Jira. When you prepared your environment you just 
-need to enter an issue number and press `Export` button. As easy as that is required from the part who wants to import 
-it - enter issue number and press `Import` button. 
+be helpful for you. Central point of communication of `snapshots` are Jira and Google Drive, also you can collect your 
+snapshots on your local computer. When you prepared your environment you need to export it by using command line or 
+chrome extension. Currently Chrome Extension supports only Jira, for other modes you need to use command line tool. In
+coming releases you can do it in both ways. 
  
 To setup XL Repo Linker you need to install 2 parts of application: npm module as a server and Chrome extension as a client. 
 
