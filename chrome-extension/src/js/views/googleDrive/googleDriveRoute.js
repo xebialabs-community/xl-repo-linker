@@ -16,9 +16,8 @@ xlRepoLinker.controller('GoogleDriveController',
             return $sce.trustAsResourceUrl(src);
         };
 
-        //XlreConfig.readXlreConfig().googleDrive
-
         $scope.importSnapshot = function () {
+            XlreCache.store('mode', 'google-drive');
             $scope.clear();
             $scope.status = 'Import is in progress...';
             //
@@ -38,44 +37,22 @@ xlRepoLinker.controller('GoogleDriveController',
         };
 
         $scope.exportSnapshot = function () {
+            XlreCache.store('mode', 'google-drive');
             $scope.clear();
             $scope.status = 'Export is in progress...';
 
-            HttpService.get('google-drive/uploadfile?fileToUploadTitle=' + $scope.packageName + '&fileToUploadPath=' + '',
-                {
-                    overwriteAlreadyExported: $scope.overwriteAlreadyExported
-                }
-            ).success(function (data) {
+            HttpService.get('google-drive/uploadfile?fileToUploadTitle=' + $scope.packageName + '&force=' + $scope.overwriteAlreadyExported)
+                .success(function (data) {
                     $scope.packageName = '';
                     $scope.status = '';
-
-                    $http.get(data).then(function(val) {
-
-                        chrome.identity.getAuthToken({'interactive': false}, function (token) {
-                            if (chrome.runtime.lastError) {
-                                $scope.$apply(function () {
-                                    $scope.errorResult = chrome.runtime.lastError.message;
-                                });
-                            } else {
-                                alert('my token is: ' + token);
-                            }
-                        });
-                    });
-
-                }).error(function (data, status) {
-                    $scope.errorResult = data;
+                    $scope.successResult = data;
+                }).error(function (err) {
+                    $scope.errorResult = err;
                     $scope.status = '';
-                    $scope.checkAndNotifyAboutServerConnection(status);
                 });
         };
 
         $scope.pickUrl = xlRepoLinkerHost + 'pick?query=';
-
-        $scope.checkAndNotifyAboutServerConnection = function (status) {
-            if (status == 0) {
-                $scope.errorResult = 'Server is not reachable. Please check that xl-repo-linker server is up and running';
-            }
-        };
 
         $scope.clear = function () {
             $scope.errorResult = '';
@@ -88,6 +65,26 @@ xlRepoLinker.controller('GoogleDriveController',
             }
         });
 
+        $scope.hasGoogleRefreshToken = function () {
+            HttpService.get('google-drive/getTokenInfo').success(function () {
+                $scope.refreshTokenReceived = true;
+                $scope.errorResult = '';
+            }).error(function (val) {
+                if (!val) {
+                    $scope.errorResult = 'Server is not reachable. Please check that xl-repo-linker server is up and running';
+                } else {
+                    $scope.errorResult = 'First you need to give an access to your Google Drive account';
+                    $scope.refreshTokenReceived = false;
+                }
+            });
+
+            return false;
+        };
+
+        $scope.shareAccess = function () {
+            HttpService.get('google-drive/auth-to-gd');
+        };
+
         $scope.isImportDisabled = function () {
             return Boolean(!$scope.packageName || $scope.status);
         };
@@ -95,5 +92,6 @@ xlRepoLinker.controller('GoogleDriveController',
         $scope.isExportDisabled = function () {
             return Boolean(!$scope.packageName || $scope.status);
         };
-    });
 
+        $scope.hasGoogleRefreshToken();
+    });
