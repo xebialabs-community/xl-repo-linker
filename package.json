@@ -66,6 +66,7 @@
     "fs-extra": "0.17.0",
     "fstream": "1.0.4",
     "getport": "0.1.0",
+    "globule": "0.2.0",
     "googleapis": "2.0.5",
     "js-yaml": "3.2.7",
     "lodash-node": "3.3.1",

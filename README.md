@@ -35,6 +35,10 @@ Installation via `npm`.  If you don't have `npm` yet:
 Once you have `npm`:
 
      npm install xl-repo-linker -g
+     
+If you already have installed node, please check that it is not older then 0.10:
+ 
+    node -v
 
 This will install `xl-repo-linker` globally so that it may be run from the command line.
 
@@ -88,6 +92,15 @@ You can see all options by running
 ### How to import xld-snapshot from Jira issue?
 
     xl-repo-linker -i DEPL-1000
+    
+## Configuration
+
+You can configure XL Repo Linker for your needs, you can find many configuration sections for that in **.xl-repo-linker-config.yml** inside your user home directory
+
+### Snapshot section
+    
+This section is responsible for the folders/files which will be included into snapshot. For examples how to use it you can
+ find it [here] (https://github.com/cowboy/node-globule)
 
 ## Chrome Extension
  
