@@ -19,7 +19,7 @@ var getProvider = function () {
 
 Cli.prototype.import = function (name, restartServerAfterImport) {
     var restart = restartServerAfterImport ? restartServerAfterImport.toString() : "false";
-    return getProvider().import.execute(name, restart);
+    return getProvider().import.execute(name, restart, true);
 };
 
 Cli.prototype.export = function (name, overwriteAlreadyExported) {

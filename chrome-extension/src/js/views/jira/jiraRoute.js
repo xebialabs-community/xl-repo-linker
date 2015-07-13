@@ -21,7 +21,6 @@ xlRepoLinker.controller('JiraController',
         })();
 
         $scope.importSnapshot = function () {
-            XlreCache.store('mode', 'jira');
             $scope.clear();
             $scope.status = 'Import is in progress...';
 
@@ -41,7 +40,6 @@ xlRepoLinker.controller('JiraController',
         };
 
         $scope.exportSnapshot = function () {
-            XlreCache.store('mode', 'jira');
             $scope.clear();
             $scope.status = 'Export is in progress...';
 

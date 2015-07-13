@@ -17,27 +17,21 @@ xlRepoLinker.controller('GoogleDriveController',
         };
 
         $scope.importSnapshot = function () {
-            XlreCache.store('mode', 'google-drive');
             $scope.clear();
             $scope.status = 'Import is in progress...';
-            //
-            //HttpService.get('import/' + $scope.packageName,
-            //    {
-            //        restartServerAfterImport: $scope.restartServerAfterImport
-            //    }
-            //).success(function (data) {
-            //        $scope.packageName = '';
-            //        $scope.status = '';
-            //        $scope.successResult = data;
-            //    }).error(function (data, status) {
-            //        $scope.errorResult = data;
-            //        $scope.status = '';
-            //        $scope.checkAndNotifyAboutServerConnection(status);
-            //    });
+
+            HttpService.get('google-drive/downloadfile?fileToDownloadTitle=' + $scope.packageName + '&restart=' + $scope.restartServerAfterImport)
+                .success(function (data) {
+                    $scope.packageName = '';
+                    $scope.status = '';
+                    $scope.successResult = data;
+                }).error(function (err) {
+                    $scope.errorResult = err;
+                    $scope.status = '';
+                });
         };
 
         $scope.exportSnapshot = function () {
-            XlreCache.store('mode', 'google-drive');
             $scope.clear();
             $scope.status = 'Export is in progress...';
 
@@ -61,6 +55,7 @@ xlRepoLinker.controller('GoogleDriveController',
 
         $scope.$watch('packageName', function (value) {
             if (value) {
+                $scope.clear();
                 $scope.$parent.packageName = value;
             }
         });
