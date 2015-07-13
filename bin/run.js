@@ -69,10 +69,6 @@ var overrideDefaultValues = function () {
     if (program.mode) {
         XlreCache.store('mode', program.mode);
     }
-
-    if (program.server) {
-        XlreCache.store('mode', 'jira');
-    }
 };
 
 var prepareProcessCommand = function () {

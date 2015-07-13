@@ -2,8 +2,8 @@ var chai = require('chai');
 var expect = chai.expect;
 var rewire = require('rewire');
 
-var TestSetup = require('../utils/setup.js');
-var JiraApi = rewire('../../../lib/jira/api.js');
+var TestSetup = require('../utils/setup');
+var JiraApi = rewire('../../../lib/jira/api');
 
 describe('Jira index', function () {
 
