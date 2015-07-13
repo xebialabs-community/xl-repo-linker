@@ -40,7 +40,9 @@ var processOptions = function () {
 
     overrideDefaultValues();
 
-    XlreConfigValidate.checkConfig().
+    XlreConfigValidate.checkConfig({
+        checkXldCredentials: program.importRestart
+    }).
         then(function () {
             return XlreXld.checkXldFolder();
         }).

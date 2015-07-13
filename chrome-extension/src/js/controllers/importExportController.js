@@ -1,8 +1,8 @@
 xlRepoLinker.controller('ImportExportController',
     function ImportExportController($state, $scope) {
-        $scope.selectedLinkType = 'jira';
+        $scope.selectedLinkType = 'local';
         $scope.linkTypes = [
-            {id: 'jira', name: 'Jira'}, {id: 'googleDrive', name: 'Google Drive'}, {id: 'local', name: 'Local'}
+            {id: 'local', name: 'Local'}, {id: 'jira', name: 'Jira'}, {id: 'googleDrive', name: 'Google Drive'}
         ];
 
         $scope.changeType = function () {
