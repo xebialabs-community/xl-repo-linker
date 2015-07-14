@@ -66,5 +66,10 @@ xlRepoLinker.controller('LocalController',
             return Boolean(!$scope.packageName || $scope.status);
         };
 
-        $scope.clear();
+        $scope.$parent.checkXldVersionCompatibility().error(function (err) {
+            $scope.clear();
+            $scope.errorResult = err;
+        }).success(function() {
+            $scope.clear();
+        });
     });

@@ -87,10 +87,16 @@ xlRepoLinker.controller('GoogleDriveController',
             return Boolean(!$scope.packageName || $scope.status);
         };
 
-        $scope.$parent.checkConfig('google-drive').success(function() {
-            $scope.hasGoogleRefreshToken();
+        $scope.$parent.checkXldVersionCompatibility().success(function() {
+            $scope.$parent.checkConfig('google-drive').success(function() {
+                $scope.hasGoogleRefreshToken();
+            }).error(function (err) {
+                $scope.clear();
+                $scope.errorResult = err;
+            });
         }).error(function (err) {
             $scope.clear();
             $scope.errorResult = err;
         });
+
     });

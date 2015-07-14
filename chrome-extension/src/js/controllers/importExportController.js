@@ -9,6 +9,10 @@ xlRepoLinker.controller('ImportExportController',
             $state.go($scope.selectedLinkType + 'Route');
         };
 
+        $scope.checkXldVersionCompatibility = function() {
+            return HttpService.get('xlrl/checkCompatibilityVersion?version=1.1.3');
+        };
+
         $scope.checkConfig = function (mode) {
             return HttpService.get('xlrl/checkConfig?mode=' + mode);
         };
