@@ -78,4 +78,6 @@ xlRepoLinker.controller('JiraController',
         $scope.isExportDisabled = function () {
             return Boolean(!$scope.jiraIssue || $scope.status);
         };
+
+        $scope.$parent.checkConfigAndShowError('jira');
     });

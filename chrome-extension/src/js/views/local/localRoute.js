@@ -65,4 +65,6 @@ xlRepoLinker.controller('LocalController',
         $scope.isExportDisabled = function () {
             return Boolean(!$scope.packageName || $scope.status);
         };
+
+        $scope.clear();
     });

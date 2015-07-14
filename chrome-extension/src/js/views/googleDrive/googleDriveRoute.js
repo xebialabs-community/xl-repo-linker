@@ -49,6 +49,7 @@ xlRepoLinker.controller('GoogleDriveController',
         $scope.clear = function () {
             $scope.errorResult = '';
             $scope.successResult = '';
+            $scope.refreshTokenRequired = false;
         };
 
         $scope.$watch('packageName', function (value) {
@@ -59,15 +60,15 @@ xlRepoLinker.controller('GoogleDriveController',
         });
 
         $scope.hasGoogleRefreshToken = function () {
+            $scope.refreshTokenRequired = false;
             HttpService.get('google-drive/getTokenInfo').success(function () {
-                $scope.refreshTokenReceived = true;
                 $scope.errorResult = '';
             }).error(function (val) {
                 if (!val) {
                     $scope.errorResult = 'Server is not reachable. Please check that xl-repo-linker server is up and running';
                 } else {
                     $scope.errorResult = 'First you need to give an access to your Google Drive account';
-                    $scope.refreshTokenReceived = false;
+                    $scope.refreshTokenRequired = true;
                 }
             });
 
@@ -86,5 +87,10 @@ xlRepoLinker.controller('GoogleDriveController',
             return Boolean(!$scope.packageName || $scope.status);
         };
 
-        $scope.hasGoogleRefreshToken();
+        $scope.$parent.checkConfig('google-drive').success(function() {
+            $scope.hasGoogleRefreshToken();
+        }).error(function (err) {
+            $scope.clear();
+            $scope.errorResult = err;
+        });
     });
