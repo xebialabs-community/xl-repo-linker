@@ -79,11 +79,11 @@ xlRepoLinker.controller('JiraController',
             return Boolean(!$scope.jiraIssue || $scope.status);
         };
 
-        $scope.$parent.checkXldVersionCompatibility().success(function() {
+        $scope.$parent.checkXldVersionCompatibility().success(function () {
             $scope.$parent.checkConfigAndShowError('jira');
         }).error(function (err) {
             $scope.clear();
-            $scope.errorResult = err;
+            $scope.errorResult = err || 'Server is not reachable. Please check that xl-repo-linker server is up and running';
         });
 
     });

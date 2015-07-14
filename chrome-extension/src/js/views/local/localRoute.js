@@ -68,8 +68,8 @@ xlRepoLinker.controller('LocalController',
 
         $scope.$parent.checkXldVersionCompatibility().error(function (err) {
             $scope.clear();
-            $scope.errorResult = err;
-        }).success(function() {
+            $scope.errorResult = err || 'Server is not reachable. Please check that xl-repo-linker server is up and running';
+        }).success(function () {
             $scope.clear();
         });
     });
