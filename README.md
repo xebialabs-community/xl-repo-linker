@@ -104,7 +104,7 @@ This section is responsible for the folders/files which will be included into sn
 
 ## Chrome Extension
  
-   After you installed the server part you need to install the Chrome Extension. Currently it is available by [this link](https://chrome.google.com/webstore/detail/xl-repo-linker/aclpjhlfbodcpenmbeibgocfpknkllcn)
+   After you installed the server part you need to install the Chrome Extension. Currently it is available by [this link](https://chrome.google.com/webstore/detail/xl-repo-linker/oocfjdlegoibdjfnpkepjchobpnennjb)
    
 ## Feedback
  
