@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>XL Repo Linker</title>
+
+    <link rel="stylesheet" href="src/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="src/assets/bootstrap-extension.css">
+    <link rel="stylesheet" href="src/assets/base.css">
+    <link rel="stylesheet" href="src/assets/angucomplete.css">
+    <link rel="stylesheet" href="src/assets/form.css">
+
+    <!-- Libraries -->
+    <script src="src/bower_components/angular/angular.js"></script>
+    <script src="src/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="src/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+
+    <!-- Applications -->
+    <script src="src/js/app.js"></script>
+
+    <!-- Controllers -->
+    <script src="src/js/controllers/importExportController.js"></script>
+
+    <!-- Filters -->
+    <script src="src/js/filters/truncate.js"></script>
+
+    <!-- Services -->
+    <script src="src/js/services/serverService.js"></script>
+    <script src="src/js/services/jiraService.js"></script>
+
+    <!-- Directives -->
+    <script src="src/js/directives/autocomplete/angucomplete.js"></script>
+
+    <!-- Views -->
+    <script src="src/js/views/jira/jiraRoute.js"></script>
+    <script src="src/js/views/googleDrive/googleDriveRoute.js"></script>
+    <script src="src/js/views/local/localRoute.js"></script>
+
+</head>
+
+<body>
+<div class="row" ng-app="xl-repo-linker" ng-csp ng-cloak>
+    <div class="col-md-12">
+        <form name="serverForm" class="form-horizontal" role="form">
+            <fieldset>
+
+                <legend class="main-title">XL Repo Linker
+                    <!--<img class="settings" src="assets/cogwheel.png" />-->
+                </legend>
+
+                <div ui-view></div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>
+</body>
+</html>

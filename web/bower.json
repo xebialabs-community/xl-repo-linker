@@ -1,0 +1,17 @@
+{
+  "name": "XL Repo Linker",
+  "version": "1.0.0",
+  "ignore": [
+    "**/.*",
+    "bower_components"
+  ],
+  "directory": "src",
+  "dependencies": {
+    "angular": "1.3.13",
+    "angular-mocks": "1.3.13",
+    "angular-route": "1.3.13",
+    "angular-sanitize": "1.3.13",
+    "angular-ui-router": "0.2.13",
+    "bootstrap": "3.3.2"
+  }
+}
