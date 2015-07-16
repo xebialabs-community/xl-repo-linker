@@ -43,8 +43,6 @@ gulp.task('less', function () {
 gulp.task('scripts', ['clean'], function() {
     return gulp.src(paths.scripts)
         .pipe(sourcemaps.init())
-        //.pipe(coffee())
-        //.pipe(uglify())
         .pipe(concat('all.min.js'))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('web/build/js'));
