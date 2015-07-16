@@ -1,9 +1,11 @@
 <div>
+    <button class="btn btn-primary pull-right bottom15">Update</button>
+
     <table class="configuration">
         <tbody ng-repeat="(cKey, cValue) in xlrlConfig">
             <tr>
                 <td>{{cKey}}</td>
-                <td>{{cValue}}</td>
+                <td><input name="{{cKey}}" value="{{cValue}}" /></td>
             </tr>
         </tbody>
     </table>
