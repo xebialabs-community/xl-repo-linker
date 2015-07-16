@@ -2,12 +2,33 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-mocha-test')
   grunt.loadNpmTasks('grunt-release')
 
+  require('grunt-bower-task')(grunt)
   require('grunt-karma')(grunt)
   require("load-grunt-tasks")(grunt)
 
-  webDir = "chrome-extension"
+  chromeExtensionDir = "chrome-extension"
+  webDir = "web"
+  webLibsDir = webDir + '/src/bower_components'
+  ceLibsDir = webDir + '/src/bower_components'
 
   grunt.initConfig
+    bower:
+      webInstall:
+        options:
+          targetDir: webLibsDir,
+          layout: 'byType',
+          install: true,
+          verbose: false,
+          cleanTargetDir: false,
+          cleanBowerDir: true
+      chromeExtensionInstall:
+        options:
+          targetDir: ceLibsDir,
+          layout: 'byType',
+          install: true,
+          verbose: false,
+          cleanTargetDir: false,
+          cleanBowerDir: true
     mochaTest:
       test:
         options:
@@ -26,11 +47,22 @@ module.exports = (grunt) ->
         singleRun: false
         autoWatch: true
     connect:
-      chrome:
+      webServer:
+        options:
+          port: 3002
+          hostname: "0.0.0.0"
+          base: webDir
+          middleware: (connect, options) ->
+            proxy = require("grunt-connect-proxy/lib/utils").proxyRequest
+            return [
+              connect.static(String(options.base))
+              connect.directory(String(options.base))
+            ]
+      chromeExtension:
         options:
           port: 3001
           hostname: "0.0.0.0"
-          base: webDir
+          base: chromeExtensionDir
           middleware: (connect, options) ->
             proxy = require("grunt-connect-proxy/lib/utils").proxyRequest
             return [
@@ -46,9 +78,10 @@ module.exports = (grunt) ->
     watch:
       scriptsCommon:
         files: [
-          "#{webDir}/src/js/**/*.js"
+          "#{chromeExtensionDir}/src/js/**/*.*",
+          "#{webDir}/src/**/*.*"
         ]
 
-  grunt.registerTask "default", ["mochaTest", "karma:singleRun"]
+  grunt.registerTask "default", ["bower", "mochaTest", "karma:singleRun"]
 
-  grunt.registerTask "serve", ["configureProxies:dev", "connect:chrome", "watch"]
+  grunt.registerTask "serve", ["configureProxies:dev", "connect:chromeExtension", "connect:webServer", "watch"]

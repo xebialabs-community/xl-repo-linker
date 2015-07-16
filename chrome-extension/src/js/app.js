@@ -9,12 +9,11 @@ xlRepoLinker.config(
 
 xlRepoLinker.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
-    $stateProvider
-        .state('importExport', {
-            url: "/importExport",
-            templateUrl: "src/js/views/importExport.html",
-            controller: "ImportExportController"
-        });
+    $stateProvider.state('importExport', {
+        url: "/importExport",
+        templateUrl: "src/js/views/importExport.html",
+        controller: "ImportExportController"
+    });
 
     $urlRouterProvider.otherwise('/importExport/localRoute');
 }]);

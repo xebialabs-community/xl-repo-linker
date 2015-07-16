@@ -1,6 +1,11 @@
 'use strict';
 
-var xlRepoLinker = angular.module('xl-repo-linker', ['angucomplete', 'truncate', 'ui.router', 'ngSanitize']);
+var xlRepoLinker = angular.module('xl-repo-linker-web', ['ui.router', 'ngSanitize']);
+
+var webState = {
+    name: 'web',
+    templateUrl: 'src/js/views/menu/mainMenu.html'
+};
 
 xlRepoLinker.config(
     function ($httpProvider, $locationProvider) {
@@ -9,12 +14,7 @@ xlRepoLinker.config(
 
 xlRepoLinker.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
-    $stateProvider
-        .state('importExport', {
-            url: "/importExport",
-            templateUrl: "src/js/views/importExport.html",
-            controller: "ImportExportController"
-        });
+    $stateProvider.state(webState);
 
-    $urlRouterProvider.otherwise('/importExport/localRoute');
+    $urlRouterProvider.otherwise('/commonConfiguration');
 }]);
