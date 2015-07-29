@@ -1,13 +1,1 @@
-<div>
-    <button class="btn btn-primary pull-right bottom15">Update</button>
-
-    <table class="configuration">
-        <tbody ng-repeat="(cKey, cValue) in xlrlConfig">
-            <tr>
-                <td>{{cKey}}</td>
-                <td><input name="{{cKey}}" value="{{cValue}}" /></td>
-            </tr>
-        </tbody>
-    </table>
-
-</div>
+<config-form data="configFormData.data" errors="configFormData.errors" update-values="updateValues" watch-depth="reference" />

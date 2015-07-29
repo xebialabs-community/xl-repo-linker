@@ -1,13 +1,17 @@
 var cli = require('./cli');
 var Files = require('../lib/common/files');
-var server = require('./../lib/services/server');
-var XlreCache = require('./../lib/common/cache');
-var XlreDb = require('./../lib/services/db');
-var XlreConfig = require('./../lib/common/config');
-var XlreSnapshot = require('./../lib/services/snapshot');
-var XlreXld = require('./../lib/common/xld');
-var XlreConfigValidate = require('./../lib/config/validate');
+var server = require('../lib/services/server');
+var XlreCache = require('../lib/common/cache');
+var XlreDb = require('../lib/services/db');
+var XlreConfig = require('../lib/common/config');
+var XlreSnapshot = require('../lib/services/snapshot');
+var XlreConfigValidate = require('../lib/config/validate');
 
+// register listeners
+require('../lib/config/updates');
+
+var colors = require('colors');
+var open = require('open');
 var program = require('commander');
 var Q = require('q');
 var _ = require('lodash-node/compat');
@@ -34,31 +38,43 @@ RunApp.prototype.begin = function () {
 };
 
 var processOptions = function () {
-    if (!process.argv.slice(2).length) {
-        program.server = true;
-    }
 
     overrideDefaultValues();
 
-    XlreConfigValidate.checkConfig({
+    XlreConfigValidate.checkConfigWithPromise({
         checkXldCredentials: program.importRestart
-    }).
-        then(function () {
-            return XlreXld.checkXldFolder();
-        }).
+    }, XlreConfig.getMode()).
         then(prepareProcessCommand).
         then(processCommand).
         then(function (message) {
             if (!_.isEmpty(message)) {
-                console.log(message);
+                console.log(message.green);
             }
         }).catch(function (err) {
-            console.error(err);
+            handleError(err);
         });
 
     if (program.showSize) {
         XlreSnapshot.create().then(function (archiveZipPath) {
-            console.log("XLD snapshot size is: " + Files.getSize(archiveZipPath) + " Mb");
+            console.log("XLD snapshot size is: " + Files.getSize(archiveZipPath) + " Mb".gray);
+        });
+    }
+};
+
+var handleError = function (err) {
+    if (typeof(err) === 'string') {
+        console.error(err.red);
+    }
+
+    handleConfigurationError(err);
+};
+
+var handleConfigurationError = function (err) {
+    if (typeof(err) === 'object' && !_.isUndefined(err['configValidation'])) {
+
+        console.error(err['configValidation'].red);
+        server.start(true).then(function () {
+            open("http://localhost:" + XlreConfig.getServerPort() + "/#/commonConfiguration");
         });
     }
 };
@@ -73,35 +89,48 @@ var overrideDefaultValues = function () {
     }
 };
 
+var shouldServerBeStarted = function () {
+    function isActionDefined() {
+        return program.import || program.importRestart || program.export || program.exportOverwrite;
+    }
+
+    function isGD() {
+        return isActionDefined() && XlreConfig.getMode() === 'google-drive';
+    }
+
+    return program.server || isGD();
+};
+
 var prepareProcessCommand = function () {
     var promises = [];
     var serverDefer = Q.defer();
     var cleanTokenPromise;
+
+    if (shouldServerBeStarted()) {
+        promises.push(serverDefer.promise);
+        server.start(true).then(function (data) {
+            serverDefer.resolve(data);
+        }).catch(function (err) {
+            serverDefer.reject(err);
+        });
+    }
 
     if (program.cleanGdtoken) {
         cleanTokenPromise = XlreDb.remove({key: "google_drive_oauth_token"});
         promises.push(cleanTokenPromise);
     }
 
-    if (program.server || XlreConfig.getMode() === 'google-drive') {
-        promises.push(serverDefer.promise);
-        server.start(true).then(function (data) {
-            serverDefer.resolve(data);
-        }).catch(function (err) {
-            serverDefer.reject(err);
-        })
-    }
-
     return Q.all(promises);
 };
 
-var processCommand = function (data) {
+var processCommand = function (dataArr) {
     var deferred = Q.defer();
 
     if (program.hasOwnProperty('help')) {
         program.outputHelp();
-        deferred.resolve(data);
-    } else if (program.import) {
+    }
+
+    if (program.import) {
         return cli.import(program.import);
     } else if (program.importRestart) {
         return cli.import(program.importRestart, true);
@@ -109,11 +138,11 @@ var processCommand = function (data) {
         return cli.export(program.export);
     } else if (program.exportOverwrite) {
         return cli.export(program.exportOverwrite, true);
-    } else {
-        deferred.resolve(data);
-    }
+    } else if (dataArr.length > 0) {
+         deferred.resolve(dataArr[0]);
+     }
 
-    return deferred.promise;
+        return deferred.promise;
 };
 
 module.exports = new RunApp();

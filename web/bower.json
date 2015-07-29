@@ -9,10 +9,13 @@
   "dependencies": {
     "angular": "1.4.2",
     "angular-mocks": "1.4.2",
+    "angular-permission": "0.3.1",
     "angular-route": "1.4.2",
     "angular-sanitize": "1.4.2",
     "angular-ui-router": "0.2.15",
     "bootstrap": "3.3.5",
-    "lodash": "3.10.0"
+    "lodash": "3.10.0",
+    "ngReact": "0.1.7",
+    "react": "0.13.3"
   }
 }
