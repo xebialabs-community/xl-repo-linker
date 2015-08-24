@@ -24,14 +24,14 @@ RunApp.prototype.begin = function () {
 
     program
         .option('-s, --server', 'Run server for Chrome Extension')
-        .option('-i, --import <n>', 'Imports the data as xld snapshot for specified JIRA issue')
-        .option('-r, --import-restart <n>', 'Imports and restarts the xld server after import')
-        .option('-e, --export <n>', 'Exports xld snapshot by specified JIRA issue')
-        .option('-o, --export-overwrite <n>', 'Exports xld snapshot and if necessary overwrites already exported archive')
+        .option('-i, --import <n>', 'Imports the data as XLD snapshot for specified JIRA issue')
+        .option('-r, --import-restart <n>', 'Imports and restarts the XLD server after import')
+        .option('-e, --export <n>', 'Exports XLD snapshot by specified JIRA issue')
+        .option('-o, --export-overwrite <n>', 'Exports XLD snapshot and if necessary overwrites already exported archive')
         .option('--xld-home <n>', 'Override XLD home specified in the configuration file')
         .option('--mode <n>', 'Override the mode specified in the configuration file')
-        .option('--show-size', 'Show the size of xld snapshot')
-        .option('--clean-gdtoken', 'Remove cached Google Drive token. Could be useful if you logged in by different user')
+        .option('--show-size', 'Show the size of XLD snapshot')
+        .option('--clean-gdtoken', 'Remove cached Google Drive token. Could be useful if you logged in as a different user')
         .parse(process.argv);
 
     processOptions();
@@ -57,6 +57,7 @@ var processOptions = function () {
     if (program.showSize) {
         XlreSnapshot.create().then(function (archiveZipPath) {
             console.log("XLD snapshot size is: " + Files.getSize(archiveZipPath) + " Mb".gray);
+            server.stop();
         });
     }
 };
@@ -89,31 +90,17 @@ var overrideDefaultValues = function () {
     }
 };
 
-var shouldServerBeStarted = function () {
-    function isActionDefined() {
-        return program.import || program.importRestart || program.export || program.exportOverwrite;
-    }
-
-    function isGD() {
-        return isActionDefined() && XlreConfig.getMode() === 'google-drive';
-    }
-
-    return program.server || isGD();
-};
-
 var prepareProcessCommand = function () {
     var promises = [];
     var serverDefer = Q.defer();
     var cleanTokenPromise;
 
-    if (shouldServerBeStarted()) {
-        promises.push(serverDefer.promise);
-        server.start(true).then(function (data) {
-            serverDefer.resolve(data);
-        }).catch(function (err) {
-            serverDefer.reject(err);
-        });
-    }
+    promises.push(serverDefer.promise);
+    server.start(true).then(function (data) {
+        serverDefer.resolve(data);
+    }).catch(function (err) {
+        serverDefer.reject(err);
+    });
 
     if (program.cleanGdtoken) {
         cleanTokenPromise = XlreDb.remove({key: "google_drive_oauth_token"});
@@ -139,10 +126,10 @@ var processCommand = function (dataArr) {
     } else if (program.exportOverwrite) {
         return cli.export(program.exportOverwrite, true);
     } else if (dataArr.length > 0) {
-         deferred.resolve(dataArr[0]);
-     }
+        deferred.resolve(dataArr[0]);
+    }
 
-        return deferred.promise;
+    return deferred.promise;
 };
 
 module.exports = new RunApp();
