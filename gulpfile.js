@@ -11,6 +11,8 @@ var path = require('path');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
+require('gulp-release-tasks')(gulp);
+
 var paths = {
     scripts: ['web/src/js/**/*.js'],
     libs: ['web/src/bower_components/**/*.js']
