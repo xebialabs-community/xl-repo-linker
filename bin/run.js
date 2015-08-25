@@ -44,7 +44,6 @@ var processOptions = function () {
     XlreConfigValidate.checkConfigWithPromise({
         checkXldCredentials: program.importRestart
     }, XlreConfig.getMode()).
-        catch(handleConfigurationError).
         then(prepareProcessCommand).
         then(processCommand).
         then(processSuccessfulFlow).
@@ -74,6 +73,8 @@ var isAction = function () {
 };
 
 var handleError = function (err) {
+    handleConfigurationError(err);
+
     if (typeof(err) === 'string') {
         console.error(err.red);
         if (isAction()) {
