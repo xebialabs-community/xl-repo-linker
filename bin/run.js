@@ -47,13 +47,8 @@ var processOptions = function () {
         catch(handleConfigurationError).
         then(prepareProcessCommand).
         then(processCommand).
-        then(function (message) {
-            if (!_.isEmpty(message)) {
-                console.log(message.green);
-            }
-        }).catch(function (err) {
-            handleError(err);
-        });
+        then(processSuccessfulFlow).
+        catch(handleError);
 
     if (program.showSize) {
         XlreSnapshot.create().then(function (archiveZipPath) {
@@ -63,7 +58,18 @@ var processOptions = function () {
     }
 };
 
-var isAction = function() {
+var processSuccessfulFlow = function (message) {
+    if (!_.isEmpty(message)) {
+        console.log(message.green);
+    }
+
+    if (isAction()) {
+        server.stop();
+    }
+};
+
+
+var isAction = function () {
     return program.import || program.importRestart || program.export || program.exportOverwrite;
 };
 
