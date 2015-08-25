@@ -10,7 +10,7 @@ xlRepoLinker.config(['$stateProvider', function ($stateProvider) {
 }]);
 
 xlRepoLinker.controller('JiraController',
-    function JiraController($rootScope, $scope, JiraService, HttpService, xlRepoLinkerHost) {
+    function JiraController($rootScope, $scope, JiraService, HttpService) {
 
         (function () {
             JiraService.init().then(function (value) {
@@ -58,7 +58,7 @@ xlRepoLinker.controller('JiraController',
                 });
         };
 
-        $scope.pickUrl = xlRepoLinkerHost + 'jira/pick?query=';
+        $scope.pickUrl = '/jira/pick?query=';
 
         $scope.checkAndNotifyAboutServerConnection = function (status) {
             if (status == 0) {

@@ -4,6 +4,7 @@ var server = require('../lib/services/server');
 var XlreCache = require('../lib/common/cache');
 var XlreDb = require('../lib/services/db');
 var XlreConfig = require('../lib/common/config');
+var XlreInit = require('../lib/common/init');
 var XlreSnapshot = require('../lib/services/snapshot');
 var XlreConfigValidate = require('../lib/config/validate');
 
@@ -41,20 +42,25 @@ var processOptions = function () {
 
     overrideDefaultValues();
 
-    XlreConfigValidate.checkConfigWithPromise({
-        checkXldCredentials: program.importRestart
-    }, XlreConfig.getMode()).
+    XlreInit.initValues().
+        then(checkConfigs).
         then(prepareProcessCommand).
         then(processCommand).
         then(processSuccessfulFlow).
         catch(handleError);
 
-    if (program.showSize) {
-        XlreSnapshot.create().then(function (archiveZipPath) {
-            console.log("XLD snapshot size is: " + Files.getSize(archiveZipPath) + " Mb".gray);
-            server.stop();
-        });
-    }
+    //if (program.showSize) {
+    //    XlreSnapshot.create().then(function (archiveZipPath) {
+    //        console.log("XLD snapshot size is: " + Files.getSize(archiveZipPath) + " Mb".gray);
+    //        server.stop();
+    //    });
+    //}
+};
+
+var checkConfigs = function () {
+    return XlreConfigValidate.checkConfigWithPromise({
+        checkXldCredentials: program.importRestart
+    }, XlreConfig.getMode());
 };
 
 var processSuccessfulFlow = function (message) {
@@ -87,7 +93,9 @@ var handleConfigurationError = function (err) {
     if (typeof(err) === 'object' && !_.isUndefined(err['configValidation'])) {
         console.error(err['configValidation'].red);
         server.start(true).then(function () {
-            open("http://localhost:" + XlreConfig.getServerPort() + "/#/commonConfiguration");
+            open(XlreConfig.getBaseUrl() + "/#/commonConfiguration");
+        }).catch(function (err) {
+            console.error(err.red);
         });
     }
 };

@@ -10,7 +10,7 @@ xlRepoLinker.config(['$stateProvider', function ($stateProvider) {
 }]);
 
 xlRepoLinker.controller('GoogleDriveController',
-    function GoogleDriveController($scope, $http, $location, HttpService, xlRepoLinkerHost, $sce) {
+    function GoogleDriveController($scope, $http, $location, HttpService, $sce) {
 
         $scope.trustSrc = function (src) {
             return $sce.trustAsResourceUrl(src);
