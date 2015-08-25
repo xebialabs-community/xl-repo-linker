@@ -12,8 +12,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     xlrl.vm.network "private_network", ip: "192.168.10.5"
     xlrl.vm.synced_folder ".", "/home/vagrant/xl-repo-linker"
 
-    xlrl.vm.network "forwarded_port", guest: 3001, host: 3000
-
     xlrl.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--memory", 512]
       vb.customize ["modifyvm", :id, "--vtxvpid", "off"]

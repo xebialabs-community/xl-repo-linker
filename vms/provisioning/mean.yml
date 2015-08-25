@@ -4,6 +4,13 @@
   sudo: true
   sudo_user: root
 
+  vars:
+    distUser: "{{ lookup('env', 'XLRE_DIST_USER') }}"
+    distPassword: "{{ lookup('env', 'XLRE_DIST_PASSWORD') }}"
+    xldVersion: "{{ lookup('env', 'XLRE_XLD_VERSION') }}"
+    xldHome: "/opt/xl-deploy"
+    xldServerHome: "{{xldHome}}/server"
+
   roles:
     - role: ansible-softwares
     - role: ansible-nodejs

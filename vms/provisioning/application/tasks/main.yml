@@ -1,3 +1,14 @@
 ---
 - name: Install the latest module of xl-repo-linker
   command: sudo npm install xl-repo-linker -g
+
+- name: Download XLD
+  command: 'wget https://nexus.xebialabs.com/nexus/content/repositories/alphas/com/xebialabs/deployit/xl-deploy/"{{xldVersion}}"/xl-deploy-"{{xldVersion}}"-server.zip --http-user "{{distUser}}" --http-password "{{distPassword}}" -q -O xl-deploy-server.zip'
+
+- name: Prepare XLD instance
+  command: '{{ item }}'
+  with_items:
+    - sudo mkdir -p {{xldHome}}
+    - sudo chown -R vagrant:vagrant {{xldHome}}
+    - sudo unzip -qo xl-deploy-server.zip
+    - sudo mv xl-deploy-{{xldVersion}}-server {{xldServerHome}}
