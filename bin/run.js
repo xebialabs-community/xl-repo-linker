@@ -44,6 +44,7 @@ var processOptions = function () {
     XlreConfigValidate.checkConfigWithPromise({
         checkXldCredentials: program.importRestart
     }, XlreConfig.getMode()).
+        catch(handleConfigurationError).
         then(prepareProcessCommand).
         then(processCommand).
         then(function (message) {
@@ -62,17 +63,21 @@ var processOptions = function () {
     }
 };
 
+var isAction = function() {
+    return program.import || program.importRestart || program.export || program.exportOverwrite;
+};
+
 var handleError = function (err) {
     if (typeof(err) === 'string') {
         console.error(err.red);
+        if (isAction()) {
+            server.stop();
+        }
     }
-
-    handleConfigurationError(err);
 };
 
 var handleConfigurationError = function (err) {
     if (typeof(err) === 'object' && !_.isUndefined(err['configValidation'])) {
-
         console.error(err['configValidation'].red);
         server.start(true).then(function () {
             open("http://localhost:" + XlreConfig.getServerPort() + "/#/commonConfiguration");
