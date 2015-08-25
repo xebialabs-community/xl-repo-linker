@@ -8,6 +8,7 @@ var connect = require('gulp-connect');
 var karma = require('gulp-karma');
 var less = require('gulp-less');
 var path = require('path');
+var runSequence = require('gulp-run-sequence');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
@@ -19,12 +20,12 @@ var paths = {
 };
 
 gulp.task('bower', function () {
-    return bower({cwd:'./web'})
+    return bower({cwd: './web'})
         .pipe(gulp.dest('./web/src/bower_components'))
 });
 
 gulp.task('bower-chrome', function () {
-    return bower({cwd:'./chrome-extension'})
+    return bower({cwd: './chrome-extension'})
         .pipe(gulp.dest('./chrome-extension/src/bower_components'))
 });
 
@@ -73,8 +74,14 @@ gulp.task('watch', function () {
     gulp.watch(paths.scripts, ['scripts', 'less']);
 });
 
-gulp.task('bower-all', ['bower', 'bower-chrome']);
+gulp.task('bower-all', function (cb) {
+    runSequence('bower', 'bower-chrome', cb);
+});
 
-gulp.task('build', ['bower-all', 'less', 'scripts']);
+gulp.task('build', function (cb) {
+    runSequence('bower-all', 'less', 'scripts', cb);
+});
 
-gulp.task('default', ['watch', 'ce-karma', 'connect']);
+gulp.task('default', function (cb) {
+    runSequence('build', 'watch', 'ce-karma', 'connect', cb);
+});
