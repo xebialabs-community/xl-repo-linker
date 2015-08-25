@@ -1,0 +1,12 @@
+---
+- name: Package prerequisites for node.js
+  action: apt pkg=python-software-properties state=installed update-cache=yes
+
+- name: Download script for installing nodejs 0.12
+  get_url: url="https://deb.nodesource.com/setup_0.12" dest="/tmp/setup_0.12.sh" mode="0755"
+
+- name: Install nodejs and npm
+  shell:  /tmp/setup_0.12.sh
+
+- name: Install nodejs and npm
+  action: apt pkg=nodejs state=installed update-cache=yes

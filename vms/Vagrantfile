@@ -1,0 +1,30 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.ssh.forward_agent = true
+
+  config.vm.define "xl-repo-linker" do |xlrl|
+    xlrl.vm.box = "hashicorp/precise64"
+    xlrl.vm.network "private_network", ip: "192.168.10.5"
+    xlrl.vm.synced_folder ".", "/home/vagrant/xl-repo-linker"
+
+    xlrl.vm.network "forwarded_port", guest: 3000, host: 3000
+
+    xlrl.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--memory", 512]
+      vb.customize ["modifyvm", :id, "--vtxvpid", "off"]
+      vb.customize ["modifyvm", :id, "--cpus", "1"]
+    end
+
+    xlrl.vm.provision "ansible" do |ansible|
+      # ansible.raw_arguments = "-i provisioning/hosts"
+      ansible.playbook = "provisioning/mean.yml"
+    end
+
+  end
+
+end

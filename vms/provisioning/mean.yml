@@ -1,0 +1,11 @@
+---
+- hosts: all
+  user: vagrant
+  sudo: true
+  sudo_user: root
+
+  roles:
+    - role: ansible-softwares
+    - role: ansible-nodejs
+    - role: ansible-nodejs-apps
+    - role: application

@@ -1,0 +1,3 @@
+---
+- name: Install the latest module of xl-repo-linker
+  command: sudo npm install xl-repo-linker -g
