@@ -135,6 +135,18 @@ var prepareProcessCommand = function () {
     return Q.all(promises);
 };
 
+var isConsoleMode = function () {
+    return isAction();
+};
+
+var enableLogging = function () {
+    if (isConsoleMode()) {
+        XlreLogger.listen('INFO', function (msgObj) {
+            XlreLogger.logToConsole(msgObj)
+        });
+    }
+};
+
 var processCommand = function (dataArr) {
     var deferred = Q.defer();
 
@@ -142,10 +154,9 @@ var processCommand = function (dataArr) {
         program.outputHelp();
     }
 
+    enableLogging();
+
     if (program.import) {
-        XlreLogger.listen('INFO', function (msgObj) {
-            XlreLogger.logToConsole(msgObj)
-        });
         return cli.import(program.import);
     } else if (program.importRestart) {
         return cli.import(program.importRestart, true);
