@@ -17,7 +17,7 @@ xlRepoLinker.controller('CommonConfigurationController',
             var key = keys[1];
 
             var groupItems = config.groups[groupKey];
-            var foundItem = _.find(groupItems, function(item) {
+            var foundItem = _.find(groupItems, function (item) {
                 return item.key === key;
             });
 

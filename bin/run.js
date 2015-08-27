@@ -5,6 +5,7 @@ var XlreCache = require('../lib/common/cache');
 var XlreDb = require('../lib/services/db');
 var XlreConfig = require('../lib/common/config');
 var XlreInit = require('../lib/common/init');
+var XlreLogger = require('../lib/common/logger');
 var XlreSnapshot = require('../lib/services/snapshot');
 var XlreConfigValidate = require('../lib/config/validate');
 
@@ -49,12 +50,12 @@ var processOptions = function () {
         then(processSuccessfulFlow).
         catch(handleError);
 
-    //if (program.showSize) {
-    //    XlreSnapshot.create().then(function (archiveZipPath) {
-    //        console.log("XLD snapshot size is: " + Files.getSize(archiveZipPath) + " Mb".gray);
-    //        server.stop();
-    //    });
-    //}
+    if (program.showSize) {
+        XlreSnapshot.create().then(function (archiveZipPath) {
+            XlreLogger.info("XLD snapshot size is: " + Files.getSize(archiveZipPath) + " Mb");
+            server.stop();
+        });
+    }
 };
 
 var checkConfigs = function () {
@@ -65,7 +66,7 @@ var checkConfigs = function () {
 
 var processSuccessfulFlow = function (message) {
     if (!_.isEmpty(message)) {
-        console.log(message.green);
+        XlreLogger.info(message);
     }
 
     if (isAction()) {
@@ -82,20 +83,24 @@ var handleError = function (err) {
     handleConfigurationError(err);
 
     if (typeof(err) === 'string') {
-        console.error(err.red);
+        XlreLogger.error(err);
         if (isAction()) {
             server.stop();
         }
+    } else if (Array.isArray(err)) {
+        _.map(err, function (errItem) {
+            XlreLogger.error(errItem.toString());
+        })
     }
 };
 
 var handleConfigurationError = function (err) {
     if (typeof(err) === 'object' && !_.isUndefined(err['configValidation'])) {
-        console.error(err['configValidation'].red);
+        XlreLogger.error(err['configValidation']);
         server.start(true).then(function () {
             open(XlreConfig.getBaseUrl() + "/#/commonConfiguration");
         }).catch(function (err) {
-            console.error(err.red);
+            XlreLogger.error(err);
         });
     }
 };
@@ -138,6 +143,9 @@ var processCommand = function (dataArr) {
     }
 
     if (program.import) {
+        XlreLogger.listen('INFO', function (msgObj) {
+            XlreLogger.logToConsole(msgObj)
+        });
         return cli.import(program.import);
     } else if (program.importRestart) {
         return cli.import(program.importRestart, true);
