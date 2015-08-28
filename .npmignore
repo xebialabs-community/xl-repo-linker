@@ -1,5 +1,7 @@
 .idea
 chrome-extension
 node_modules
+tasks
 .xl-repo-linker-config.yml
 results.txt
+chrome-extension.png

@@ -48,14 +48,20 @@ var processOptions = function () {
         then(prepareProcessCommand).
         then(processCommand).
         then(processSuccessfulFlow).
+        then(showSize).
         catch(handleError);
+};
 
-    if (program.showSize) {
-        XlreSnapshot.create().then(function (archiveZipPath) {
-            XlreLogger.info("XLD snapshot size is: " + Files.getSize(archiveZipPath) + " Mb");
-            server.stop();
-        });
-    }
+var showSize = function () {
+    return Q.Promise(function (resolve) {
+        if (program.showSize) {
+            XlreSnapshot.create().then(function (archiveZipPath) {
+                XlreLogger.info("XLD snapshot size is: " + Files.getSize(archiveZipPath) + " Mb");
+                server.stop();
+            });
+        }
+        resolve.resolve();
+    });
 };
 
 var checkConfigs = function () {
@@ -136,15 +142,13 @@ var prepareProcessCommand = function () {
 };
 
 var isConsoleMode = function () {
-    return isAction();
+    return isAction() || program.showSize;
 };
 
 var enableLogging = function () {
-    if (isConsoleMode()) {
-        XlreLogger.listen('INFO', function (msgObj) {
-            XlreLogger.logToConsole(msgObj)
-        });
-    }
+    XlreLogger.listen('INFO', function (msgObj) {
+        XlreLogger.logToConsole(msgObj)
+    });
 };
 
 var processCommand = function (dataArr) {

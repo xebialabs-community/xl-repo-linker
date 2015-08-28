@@ -4,12 +4,14 @@
   "dependencies": {
   },
   "devDependencies": {
+    "chai": "3.2.0",
+    "chai-as-promised": "5.1.0",
+    "gulp": "3.9.0",
+    "gulp-mocha": "2.1.3",
+    "gulp-util": "3.0.6",
     "mocha": "2.2.5"
   },
   "license": "ISC",
   "description": "Smoke tesst for XL Repo Linker",
-  "author": "Bogdan Nechyporenko",
-  "scripts": {
-    "test": "node_modules/.bin/mocha -w"
-  }
+  "author": "Bogdan Nechyporenko"
 }

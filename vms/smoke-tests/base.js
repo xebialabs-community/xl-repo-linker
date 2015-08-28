@@ -5,6 +5,12 @@ var Q = require('q');
 var XlreSmokeBase = function () {
 };
 
+XlreSmokeBase.prototype.checkCommand = function (command, callback) {
+    XlreSmokeBase.prototype.executeCommand(command).then(callback).catch(function (err) {
+        console.error(err.message);
+    });
+};
+
 XlreSmokeBase.prototype.executeCommand = function (command) {
     var deferred = Q.defer();
 
