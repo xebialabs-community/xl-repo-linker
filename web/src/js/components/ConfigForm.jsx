@@ -2,7 +2,8 @@ var ConfigForm = React.createClass({
     propTypes: {
         data: React.PropTypes.object.isRequired,
         errors: React.PropTypes.object.isRequired,
-        updateValues: React.PropTypes.func
+        updateValues: React.PropTypes.func,
+        updateState: React.PropTypes.func
     },
 
     onClick: function () {
@@ -23,6 +24,7 @@ var ConfigForm = React.createClass({
         var dataCopy = _.cloneDeep(this.props.data);
         _.find(dataCopy.groups[item.groupedKey], {'key': item.key}).value = item.value;
         this.setState({data: dataCopy});
+        this.props.updateState(dataCopy);
     },
 
     render: function () {

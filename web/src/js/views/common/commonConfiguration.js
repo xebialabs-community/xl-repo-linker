@@ -30,6 +30,10 @@ xlRepoLinker.controller('CommonConfigurationController',
 
         $scope.configFormData = {};
 
+        $scope.updateState = function (data) {
+            $scope.configFormData = {data: data, errors: {}};
+        };
+
         $scope.updateValues = function (data) {
             HttpService.post('xlrl/updateConfig', {data: data});
 
