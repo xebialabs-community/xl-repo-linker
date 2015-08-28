@@ -1,0 +1,15 @@
+{
+  "name": "xl-repo-linker-smoke-tests",
+  "version": "0.0.1",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "mocha": "2.2.5"
+  },
+  "license": "ISC",
+  "description": "Smoke tesst for XL Repo Linker",
+  "author": "Bogdan Nechyporenko",
+  "scripts": {
+    "test": "node_modules/.bin/mocha -w"
+  }
+}
