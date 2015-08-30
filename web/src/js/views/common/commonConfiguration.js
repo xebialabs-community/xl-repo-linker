@@ -28,31 +28,32 @@ xlRepoLinker.controller('CommonConfigurationController',
             return foundItem.value;
         }
 
+        var checkConfiguration = function (config) {
+            $scope.infoMessage = 'Checking the configuration...';
+
+            HttpService.get('xlrl/checkConfig?mode=' + getKeyValue(config, 'common.mode')).success(function () {
+                $scope.infoMessage = undefined;
+                $scope.configFormData = {data: config, errors: {}};
+            }).error(function (err) {
+                $scope.infoMessage = undefined;
+                $scope.configFormData = {data: config, errors: err};
+            });
+        };
+
         $scope.configFormData = {};
 
         $scope.updateState = function (data) {
             $scope.configFormData = {data: data, errors: {}};
         };
 
-        $scope.updateValues = function (data) {
-            HttpService.post('xlrl/updateConfig', {data: data});
-
-            HttpService.get('xlrl/checkConfig?mode=' + getKeyValue(data, 'common.mode')).success(function () {
-                $scope.configFormData = {data: data, errors: {}};
-            }).error(function (err) {
-                $scope.configFormData = {data: data, errors: err};
-            });
+        $scope.updateValues = function (config) {
+            HttpService.post('xlrl/updateConfig', {data: config});
+            checkConfiguration(config);
         };
 
         $scope.getConfig = function () {
             HttpService.get('xlrl/readConfig').success(function (config) {
-
-                HttpService.get('xlrl/checkConfig?mode=' + getKeyValue(config, 'common.mode')).success(function () {
-                    $scope.configFormData = {data: config, errors: {}};
-                }).error(function (err) {
-                    $scope.configFormData = {data: config, errors: err};
-                });
-
+                checkConfiguration(config);
             }).error(function (err) {
                 console.log(err);
             });

@@ -1,1 +1,6 @@
-<config-form data="configFormData.data" errors="configFormData.errors" update-state="updateState" update-values="updateValues" watch-depth="reference" />
+<div ng-hide="infoMessage">
+    <config-form data="configFormData.data" errors="configFormData.errors" update-state="updateState" update-values="updateValues" watch-depth="reference" />
+</div>
+<div ng-show="infoMessage">
+    {{infoMessage}}
+</div>
