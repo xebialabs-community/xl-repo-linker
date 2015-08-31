@@ -10,6 +10,7 @@ chai.use(chaiAsPromised);
 var assert = require('assert');
 
 describe('Tests where XLD is not installed yet', function () {
+    this.timeout(3000);
 
     it('xl-repo-linker -h', function (done) {
         XlreSmokeBase.checkCommand('xl-repo-linker -h', function (data) {
