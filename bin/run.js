@@ -83,7 +83,8 @@ var showSize = function () {
 
 var checkConfigs = function () {
     return XlreConfigValidate.checkConfigWithPromise({
-        checkXldCredentials: program.importRestart
+        checkXldCredentials: program.importRestart,
+        checkXldLicense: program.export || program.exportOverwrite
     }, XlreConfig.getMode());
 };
 
