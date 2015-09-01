@@ -22,19 +22,26 @@ describe('Simple tests', function () {
         });
     });
 
-    it('xl-repo-linker --show-size', function (done) {
-        XlreSmokeBase.checkCommand('xl-repo-linker --show-size', function (data) {
-            expect(data).to.contain('XLD snapshot size is:');
+    // TODO: transfer when XLD is ready
+    //it.only('xl-repo-linker --show-size', function (done) {
+    //    XlreSmokeBase.checkCommand('xl-repo-linker --show-size', function (data) {
+    //        expect(data).to.contain('XLD snapshot size is:');
+    //        done();
+    //    });
+    //});
+
+    it('xl-repo-linker --mode bla', function (done) {
+        XlreSmokeBase.checkCommand('xl-repo-linker --mode bla', function (data) {
+            expect(data).to.equal('Please check your mode value, valid values are [local, jira, google-drive]\n');
             done();
         });
     });
 
-    it.only('xl-repo-linker --xld-home=IncorrectPath', function (done) {
+    it('xl-repo-linker --xld-home=IncorrectPath', function (done) {
         XlreSmokeBase.runAndCheckCurl('xl-repo-linker --xld-home=IncorrectPath', 4, function (data) {
-            console.log('data.fields = ', data);
-            expect(data.configValidation).to.equal('Please check your mode value, valid values are [local, jira, google-drive]');
+            expect(data.configValidation).to.equal('XL Deploy home doesn\'t exist [IncorrectPath]');
             expect(data.fields.length).to.equal(1);
-            assert.ok(_.isEqual(['common.mode'], data.fields));
+            assert.deepEqual(['xld.home'], data.fields);
             done();
         });
     });

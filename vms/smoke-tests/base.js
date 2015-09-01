@@ -2,6 +2,7 @@ var exec = require('child_process').exec;
 var sleep = require('sleep');
 var sys = require('sys');
 var Q = require('q');
+var _ = require('lodash-node/compat');
 
 var XlreSmokeBase = function () {
 };
@@ -10,11 +11,11 @@ var noop = function () {
 };
 
 var toJson = function (str) {
-    return eval("(" + str + ")");
+    return _.isEmpty(str) ? "{}" : eval("(" + str + ")");
 };
 
-var printError = function(err) {
-    console.error(err.message);
+var printError = function (err) {
+    console.error(err.message || err);
 };
 
 var getStatusCode = function () {
@@ -32,7 +33,7 @@ var getMessageBody = function () {
 };
 
 XlreSmokeBase.prototype.checkCommand = function (command, callback) {
-    XlreSmokeBase.prototype.executeCommand(command).then(callback).catch(printError);
+    XlreSmokeBase.prototype.executeCommand(command).then(callback);
 };
 
 XlreSmokeBase.prototype.runAndCheckCurl = function (xlreCommand, rampUpSleep, callback) {
@@ -48,9 +49,11 @@ XlreSmokeBase.prototype.executeCommand = function (command) {
 
     function puts(error, stdout, stderr) {
         if (error) {
-            deferred.reject(error);
+            printError(error);
+            deferred.resolve(error);
         } else if (stderr) {
-            deferred.reject(stderr);
+            printError(stderr);
+            deferred.resolve(stderr);
         } else {
             deferred.resolve(stdout);
         }
