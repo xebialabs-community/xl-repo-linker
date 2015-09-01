@@ -22,10 +22,9 @@ describe('Simple tests', function () {
         });
     });
 
-    it.only('xl-repo-linker --show-size', function (done) {
+    it('xl-repo-linker --show-size', function (done) {
         XlreSmokeBase.checkCommand('xl-repo-linker --xld-home="/opt/xl-deploy/server/" --show-size', function (data) {
-            console.log(data);
-            //expect(data).to.contain('XLD snapshot size is:');
+            expect(data).to.contain('XLD snapshot size is:');
             done();
         });
     });
