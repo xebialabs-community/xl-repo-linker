@@ -19,7 +19,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
 
     xlrl.vm.provision "ansible" do |ansible|
-      # ansible.raw_arguments = "-i provisioning/hosts"
       ansible.playbook = "provisioning/mean.yml"
     end
 

@@ -12,6 +12,9 @@
     - sudo chown -R vagrant:vagrant {{xldHome}}
     - sudo unzip -qo xl-deploy-server.zip
     - sudo mv xl-deploy-{{xldVersion}}-server {{xldServerHome}}
-    - cd xl-repo-linker/smoke-tests
-    - npm install
+
+- name: Prepare test infrastructure
+  command: '{{ item }}'
+  with_items:
+    - npm install --prefix /home/vagrant/xl-repo-linker/smoke-tests
     - sudo npm install gulp -g

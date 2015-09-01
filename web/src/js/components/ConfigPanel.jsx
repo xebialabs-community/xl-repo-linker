@@ -47,7 +47,7 @@ var ConfigPanel = React.createClass({
 
                             return (<div className="row">
                                 <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">{label}</div>
-                                <div className="col-xs-4 col-sm-8 col-md-8 col-lg-8">
+                                <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
                                     <RlInput item={item} onChange={$this.handleChange.bind(null, item.key)} valid={!invalid}/>
                                 </div>
                             </div>);
