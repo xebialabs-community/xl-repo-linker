@@ -24,6 +24,8 @@ var RunApp = function () {
 
 RunApp.prototype.begin = function () {
 
+    enableLogging();
+
     program
         .option('-s, --server', 'Run server for Chrome Extension')
         .option('-i, --import <n>', 'Imports the data as XLD snapshot for specified JIRA issue')
@@ -43,13 +45,28 @@ var processOptions = function () {
 
     overrideDefaultValues();
 
-    XlreInit.initValues().
+    checkMode().
+        then(initValues).
         then(checkConfigs).
         then(prepareProcessCommand).
         then(processCommand).
         then(processSuccessfulFlow).
         then(showSize).
         catch(handleError);
+};
+
+var initValues = function () {
+    return XlreInit.initValues();
+};
+
+var checkMode = function () {
+    return Q.Promise(function (resolve, reject) {
+        if (!_.contains(['local', 'jira', 'google-drive'], XlreConfig.getMode())) {
+            reject('Please check your mode value, valid values are [local, jira, google-drive]');
+        } else {
+            resolve();
+        }
+    });
 };
 
 var showSize = function () {
@@ -157,8 +174,6 @@ var processCommand = function (dataArr) {
     if (program.hasOwnProperty('help')) {
         program.outputHelp();
     }
-
-    enableLogging();
 
     if (program.import) {
         return cli.import(program.import);
