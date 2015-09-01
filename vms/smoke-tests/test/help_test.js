@@ -22,13 +22,13 @@ describe('Simple tests', function () {
         });
     });
 
-    // TODO: transfer when XLD is ready
-    //it.only('xl-repo-linker --show-size', function (done) {
-    //    XlreSmokeBase.checkCommand('xl-repo-linker --show-size', function (data) {
-    //        expect(data).to.contain('XLD snapshot size is:');
-    //        done();
-    //    });
-    //});
+    it.only('xl-repo-linker --show-size', function (done) {
+        XlreSmokeBase.checkCommand('xl-repo-linker --xld-home="/opt/xl-deploy/server/" --show-size', function (data) {
+            console.log(data);
+            //expect(data).to.contain('XLD snapshot size is:');
+            done();
+        });
+    });
 
     it('xl-repo-linker --mode bla', function (done) {
         XlreSmokeBase.checkCommand('xl-repo-linker --mode bla', function (data) {
