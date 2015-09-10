@@ -12,7 +12,7 @@ var runSequence = require('gulp-run-sequence');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
-require('gulp-release-tasks')(gulp);
+require('gulp-release-it')(gulp);
 
 var paths = {
     scripts: ['web/src/js/**/*.js'],
