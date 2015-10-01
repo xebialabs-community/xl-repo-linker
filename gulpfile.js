@@ -7,10 +7,12 @@ var del = require('del');
 var gulp = require('gulp');
 var karma = require('gulp-karma');
 var less = require('gulp-less');
+var mocha = require('gulp-mocha');
 var path = require('path');
 var runSequence = require('gulp-run-sequence');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
+var util = require('gulp-util');
 
 require('gulp-release-it')(gulp);
 
@@ -84,4 +86,10 @@ gulp.task('build', function (cb) {
 
 gulp.task('default', function (cb) {
     runSequence('build', 'watch', 'ce-karma', 'connect', cb);
+});
+
+gulp.task('smoke-tests', function () {
+    return gulp.src(['vms/smoke-tests/test/**/*.js'], {read: false})
+        .pipe(mocha({reporter: 'spec'}))
+        .on('error', util.log);
 });
