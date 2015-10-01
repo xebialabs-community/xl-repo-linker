@@ -6,7 +6,6 @@ describe('Simple tests', function () {
     $this.timeout(10000);
 
     it('xl-repo-linker -h', function (done) {
-
         return cu.checkCommand('xl-repo-linker -h', function (data) {
             cu.expect(data).contains('Usage: xl-repo-linker');
         }, done, 2000);
